@@ -22,8 +22,8 @@ public class Blog extends Base {
     @Column(name = "detail")
     private String detail;
 
-    @Column(name = "create_date")
-    private LocalDate createDate;
+    @Column(name = "is_active")
+    private boolean isActive;
 
     @ManyToOne
     @JoinColumn(name = "skill_id")

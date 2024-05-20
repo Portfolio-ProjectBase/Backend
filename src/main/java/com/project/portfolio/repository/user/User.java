@@ -22,8 +22,8 @@ public class User extends Base {
     private String surname;
     @Column(name = "role")
     private String role;
-    @Column(name = "email")
-    private String email;
+    @Column(name = "email_address")
+    private String emailAddress;
     @Column(name = "password")
     private String password;
 }
