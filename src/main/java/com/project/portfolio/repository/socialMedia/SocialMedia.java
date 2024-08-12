@@ -20,6 +20,9 @@ import java.util.List;
 @Entity
 @Table(name = "Social_Medias")
 public class SocialMedia extends Base {
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "link")
     private String link;
 
