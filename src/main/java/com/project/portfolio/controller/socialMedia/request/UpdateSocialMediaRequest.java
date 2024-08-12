@@ -15,5 +15,7 @@ public class UpdateSocialMediaRequest {
     @NotNull
     private int id;
     @NotBlank
+    private String name;
+    @NotBlank
     private String link;
 }

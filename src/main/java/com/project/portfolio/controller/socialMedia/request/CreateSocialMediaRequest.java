@@ -12,5 +12,7 @@ import lombok.Setter;
 @Setter
 public class CreateSocialMediaRequest {
     @NotBlank
+    private String name;
+    @NotBlank
     private String link;
 }

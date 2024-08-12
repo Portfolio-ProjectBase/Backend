@@ -11,5 +11,6 @@ import lombok.Setter;
 @Setter
 public class SocialMediaResponse {
     private int id;
+    private String name;
     private String link;
 }
