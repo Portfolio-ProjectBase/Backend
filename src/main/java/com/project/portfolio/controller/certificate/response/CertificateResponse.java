@@ -17,4 +17,5 @@ public class CertificateResponse {
     String organisationName;
     LocalDate givenDate;
     String certificateSiteLink;
+    String serialNumber;
 }

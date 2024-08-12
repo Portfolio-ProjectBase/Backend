@@ -1,4 +1,4 @@
-package com.project.portfolio.controller.user.request;
+package com.project.portfolio.controller.education.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -6,22 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreateUserRequest {
-
+public class CreateEducationRequest {
     @NotBlank
     private String name;
     @NotBlank
-    private String surname;
+    private Date startDate;
     @NotBlank
-    private String role;
+    private Date finishDate;
     @NotBlank
-    private String emailAddress;
-    @NotBlank
-    private String password;
-    private String resumeUrl;
+    private String major;
 
 }

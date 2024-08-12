@@ -26,4 +26,6 @@ public class Certificate extends Base {
     private LocalDate givenDate;
     @Column(name = "certificate_site_link")
     private String certificateSiteLink;
+    @Column(name = "serial_number")
+    private String serialNumber;
 }

@@ -1,4 +1,4 @@
-package com.project.portfolio.repository.user;
+package com.project.portfolio.repository.referance;
 
 import com.project.portfolio.core.Base;
 import jakarta.persistence.Column;
@@ -9,23 +9,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "Users")
-public class User extends Base {
+@Table(name = "Referance")
+public class Referance extends Base {
     @Column(name = "name")
     private String name;
     @Column(name = "surname")
     private String surname;
-    @Column(name = "role")
-    private String role;
     @Column(name = "email_address")
     private String emailAddress;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "resumeUrl")
-    private String resumeUrl;
 }

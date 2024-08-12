@@ -15,4 +15,5 @@ public class UserResponse {
     String surname;
     String role;
     String emailAddress;
+    private String resumeUrl;
 }

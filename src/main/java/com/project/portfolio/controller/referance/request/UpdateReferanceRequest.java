@@ -1,4 +1,4 @@
-package com.project.portfolio.controller.homepage.request;
+package com.project.portfolio.controller.referance.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,14 +7,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateHomepageRequest {
-    @NotBlank
-    private String detail;
-
+@Getter
+@Setter
+public class UpdateReferanceRequest {
     @NotNull
-    private int socialMediaId;
+    private int id;
+    @NotBlank
+    private String name;
+    @NotBlank
+    private String surname;
+    @NotBlank
+    private String emailAddress;
+
 }

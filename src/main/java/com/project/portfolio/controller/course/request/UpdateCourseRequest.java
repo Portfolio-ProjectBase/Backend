@@ -1,4 +1,4 @@
-package com.project.portfolio.controller.about.request;
+package com.project.portfolio.controller.course.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,14 +7,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateAboutRequest {
+@Getter
+@Setter
+public class UpdateCourseRequest {
     @NotNull
     private int id;
-
     @NotBlank
+    private String name;
+    @NotBlank
+    private String instructor;
+
     private String detail;
+    @NotBlank
+    private Date date;
 }
