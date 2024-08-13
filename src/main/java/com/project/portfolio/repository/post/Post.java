@@ -1,4 +1,4 @@
-package com.project.portfolio.repository.blog;
+package com.project.portfolio.repository.post;
 
 import com.project.portfolio.core.Base;
 import com.project.portfolio.repository.skill.Skill;
@@ -8,15 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "Blogs")
+@Table(name = "Posts")
 @Entity
-public class Blog extends Base {
+public class Post extends Base {
     @Column(name = "title")
     private String title;
     @Column(name = "detail")

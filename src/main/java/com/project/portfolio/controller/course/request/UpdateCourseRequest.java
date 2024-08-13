@@ -1,5 +1,6 @@
 package com.project.portfolio.controller.course.request;
 
+import com.project.portfolio.repository.course.Course;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,6 @@ public class UpdateCourseRequest {
     private String detail;
     @NotBlank
     private Date date;
+
+
 }

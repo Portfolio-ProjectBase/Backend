@@ -21,7 +21,7 @@ public class UserController {
     public ResponseEntity<String> uploadResume(@RequestParam("file") MultipartFile file) {
         try {
             // Dosyayı saklayacağın dizin
-            String uploadDir = "uploads/resumes/";
+            String uploadDir = "/uploads/resumes/";
             String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
             Path filePath = Paths.get(uploadDir + fileName);
 

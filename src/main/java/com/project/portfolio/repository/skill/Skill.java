@@ -1,7 +1,7 @@
 package com.project.portfolio.repository.skill;
 
 import com.project.portfolio.core.Base;
-import com.project.portfolio.repository.blog.Blog;
+import com.project.portfolio.repository.post.Post;
 import com.project.portfolio.repository.project.Project;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,5 +28,5 @@ public class Skill extends Base {
     private List<Project> projects;
 
     @OneToMany(mappedBy = "skill")
-    private List<Blog> blogs;
+    private List<Post> posts;
 }

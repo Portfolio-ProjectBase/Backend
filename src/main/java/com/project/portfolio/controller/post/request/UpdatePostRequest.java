@@ -1,4 +1,4 @@
-package com.project.portfolio.controller.blog.request;
+package com.project.portfolio.controller.post.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateBlogRequest {
+public class UpdatePostRequest {
+    @NotNull
+    private int id;
+
     @NotBlank
     private String title;
 

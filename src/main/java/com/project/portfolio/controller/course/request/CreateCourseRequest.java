@@ -1,5 +1,6 @@
 package com.project.portfolio.controller.course.request;
 
+import com.project.portfolio.repository.course.Course;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,8 @@ public class CreateCourseRequest {
     private String detail;
     @NotBlank
     private Date date;
+
+    public Course toEntity() {
+        return new Course(name, instructor, detail, date);
+    }
 }

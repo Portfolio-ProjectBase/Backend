@@ -1,4 +1,4 @@
-package com.project.portfolio.controller.blog.response;
+package com.project.portfolio.controller.post.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BlogResponse {
+public class PostResponse {
     int id;
     String title;
     String detail;
