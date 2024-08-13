@@ -28,4 +28,6 @@ public class User extends Base {
     private String password;
     @Column(name = "resumeUrl")
     private String resumeUrl;
+    @Column(name = "about_me")
+    private String aboutMe;
 }
