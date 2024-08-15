@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
@@ -20,6 +21,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@SuperBuilder
 @Table(name = "Course")
 public class Course extends Base {
     private String name;
@@ -32,6 +34,13 @@ public class Course extends Base {
     private User user;
 
     public CourseResponse toResponse() {
-        return new CourseResponse(name, instructor, detail, date);
+        return CourseResponse.builder()
+                .id(getId())
+                .name(getName())
+                .instructor(getInstructor())
+                .detail(getDetail())
+                .date(getDate())
+                .build();
     }
+
 }

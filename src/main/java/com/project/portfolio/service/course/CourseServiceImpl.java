@@ -5,15 +5,21 @@ import com.project.portfolio.controller.course.request.UpdateCourseRequest;
 import com.project.portfolio.controller.course.response.CourseResponse;
 import com.project.portfolio.repository.course.Course;
 import com.project.portfolio.repository.course.CourseRepository;
-import lombok.AllArgsConstructor;
+import com.project.portfolio.repository.user.User;
+import com.project.portfolio.service.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service
-@AllArgsConstructor
-public class CourseServiceImpl {
-private final CourseRepository repository;
+import java.util.List;
 
-    public CourseResponse get(int id) {
+@Service
+@RequiredArgsConstructor
+public class CourseServiceImpl implements CourseService{
+
+    private final CourseRepository repository;
+    private final UserService userService;
+
+    public CourseResponse getById(int id) {
         Course course = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Course not found with id: " + id));
         return course.toResponse();
@@ -21,9 +27,12 @@ private final CourseRepository repository;
 
     public void create(CreateCourseRequest createCourseRequest) {
 
+        repository.save(toEntity(createCourseRequest));
+
     }
 
-    public CourseResponse update(UpdateCourseRequest updateCourseRequest) {
+    public void update(UpdateCourseRequest updateCourseRequest) {
+
         Course course = repository.findById(updateCourseRequest.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Course not found with id: " + updateCourseRequest.getId()));
         course.setName(updateCourseRequest.getName());
@@ -32,10 +41,39 @@ private final CourseRepository repository;
         course.setDate(updateCourseRequest.getDate());
         repository.save(course);
 
-        return course.toResponse();
+    }
+
+    @Override
+    public List<CourseResponse> getAll() {
+
+        List<Course> courses = repository.findAll();
+        List<CourseResponse> responses = courses.stream().map(Course::toResponse).toList();
+        return responses;
+
     }
 
     public void delete(int id) {
         repository.deleteById(id);
+    }
+
+    public Course toEntity(CreateCourseRequest courseRequest){
+        return Course.builder()
+                .name(courseRequest.getName())
+                .instructor(courseRequest.getInstructor())
+                .detail(courseRequest.getDetail())
+                .date(courseRequest.getDate())
+                .user(User.fromResponse(userService.getById(courseRequest.getUserId())))
+                .build();
+    }
+
+    public Course toEntity(UpdateCourseRequest courseRequest){
+        return Course.builder()
+                .id(courseRequest.getId())
+                .name(courseRequest.getName())
+                .instructor(courseRequest.getInstructor())
+                .detail(courseRequest.getDetail())
+                .date(courseRequest.getDate())
+                .user(User.fromResponse(userService.getById(courseRequest.getUserId())))
+                .build();
     }
 }

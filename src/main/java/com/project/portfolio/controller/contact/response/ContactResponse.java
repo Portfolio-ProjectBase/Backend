@@ -2,15 +2,13 @@ package com.project.portfolio.controller.contact.response;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class ContactResponse {
 
     int id;
@@ -19,7 +17,7 @@ public class ContactResponse {
 
     String surname;
 
-    String mailAddress;
+    String emailAddress;
 
     String message;
 }

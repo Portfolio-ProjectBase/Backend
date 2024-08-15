@@ -1,9 +1,6 @@
 package com.project.portfolio.controller.course.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -11,7 +8,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class CourseResponse {
+    private int id;
     private String name;
     private String instructor;
     private String detail;

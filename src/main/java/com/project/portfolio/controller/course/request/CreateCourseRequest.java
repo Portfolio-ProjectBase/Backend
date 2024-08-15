@@ -22,6 +22,7 @@ public class CreateCourseRequest {
     private String detail;
     @NotBlank
     private Date date;
+    private int userId;
 
 
 }

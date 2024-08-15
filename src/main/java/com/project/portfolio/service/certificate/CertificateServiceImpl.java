@@ -5,6 +5,8 @@ import com.project.portfolio.controller.certificate.request.UpdateCertificateReq
 import com.project.portfolio.controller.certificate.response.CertificateResponse;
 import com.project.portfolio.repository.certificate.Certificate;
 import com.project.portfolio.repository.certificate.CertificateRepository;
+import com.project.portfolio.repository.user.User;
+import com.project.portfolio.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class CertificateServiceImpl implements CertificateService{
 
     private final CertificateRepository certificateRepository;
+    private final UserService userService;
 
     @Override
     public void create(CreateCertificateRequest certificateRequest) {
@@ -60,7 +63,7 @@ public class CertificateServiceImpl implements CertificateService{
                 .givenDate(certificateRequest.getGivenDate())
                 .organisationName(certificateRequest.getOrganisationName())
                 .serialNumber(certificateRequest.getSerialNumber())
-                //.user(UserService.findById(certificateRequest.getUserId()))
+                .user(User.fromResponse(userService.getById(certificateRequest.getUserId())))
                 .build();
     }
 
@@ -72,6 +75,7 @@ public class CertificateServiceImpl implements CertificateService{
                 .givenDate(certificateRequest.getGivenDate())
                 .organisationName(certificateRequest.getOrganisationName())
                 .serialNumber(certificateRequest.getSerialNumber())
+                .user(User.fromResponse(userService.getById(certificateRequest.getUserId())))
                 .build();
     }
 

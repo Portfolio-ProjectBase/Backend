@@ -25,6 +25,6 @@ public class UpdateCourseRequest {
     private String detail;
     @NotBlank
     private Date date;
-
+    private int userId;
 
 }
