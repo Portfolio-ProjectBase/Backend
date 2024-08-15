@@ -3,10 +3,8 @@ package com.project.portfolio.repository.skill;
 import com.project.portfolio.core.Base;
 import com.project.portfolio.repository.post.Post;
 import com.project.portfolio.repository.project.Project;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.project.portfolio.repository.user.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,12 +19,20 @@ import java.util.List;
 @Entity
 @Table(name = "Skills")
 public class Skill extends Base {
+
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "skill")
-    private List<Project> projects;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
-    @OneToMany(mappedBy = "skill")
-    private List<Post> posts;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }

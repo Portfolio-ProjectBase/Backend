@@ -1,9 +1,8 @@
 package com.project.portfolio.repository.referance;
 
 import com.project.portfolio.core.Base;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.project.portfolio.repository.user.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,4 +21,9 @@ public class Referance extends Base {
     private String surname;
     @Column(name = "email_address")
     private String emailAddress;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }

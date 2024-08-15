@@ -1,9 +1,8 @@
 package com.project.portfolio.repository.certificate;
 
 import com.project.portfolio.core.Base;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.project.portfolio.repository.user.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +27,9 @@ public class Certificate extends Base {
     private String certificateSiteLink;
     @Column(name = "serial_number")
     private String serialNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }

@@ -2,11 +2,14 @@ package com.project.portfolio.repository.post;
 
 import com.project.portfolio.core.Base;
 import com.project.portfolio.repository.skill.Skill;
+import com.project.portfolio.repository.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +26,10 @@ public class Post extends Base {
     @Column(name = "is_active")
     private boolean isActive;
 
+    @OneToMany(mappedBy = "post")
+    private List<Skill> skills;
+
     @ManyToOne
-    @JoinColumn(name = "skill_id")
-    private Skill skill;
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -1,4 +1,4 @@
-package com.project.portfolio.repository.socialMedia;
+package com.project.portfolio.repository.hobby;
 
 import com.project.portfolio.core.Base;
 import com.project.portfolio.repository.user.User;
@@ -8,23 +8,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "Social_Medias")
-public class SocialMedia extends Base {
+@Table(name = "Hobbies")
+public class Hobby extends Base {
+
     @Column(name = "name")
     private String name;
-
-    @Column(name = "link")
-    private String link;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
 }
