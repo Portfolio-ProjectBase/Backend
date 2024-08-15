@@ -23,7 +23,5 @@ public class CreateCourseRequest {
     @NotBlank
     private Date date;
 
-    public Course toEntity() {
-        return new Course(name, instructor, detail, date);
-    }
+
 }

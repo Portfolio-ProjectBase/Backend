@@ -20,7 +20,7 @@ private final CourseRepository repository;
     }
 
     public void create(CreateCourseRequest createCourseRequest) {
-       repository.save(createCourseRequest.toEntity());
+
     }
 
     public CourseResponse update(UpdateCourseRequest updateCourseRequest) {

@@ -10,7 +10,7 @@ import com.project.portfolio.repository.hobby.Hobby;
 import com.project.portfolio.repository.language.Language;
 import com.project.portfolio.repository.post.Post;
 import com.project.portfolio.repository.project.Project;
-import com.project.portfolio.repository.reference.Referance;
+import com.project.portfolio.repository.reference.Reference;
 import com.project.portfolio.repository.resume.Resume;
 import com.project.portfolio.repository.skill.Skill;
 import com.project.portfolio.repository.socialMedia.SocialMedia;
@@ -69,7 +69,7 @@ public class User extends Base {
     private List<Project> projects;
 
     @OneToMany(mappedBy = "user")
-    private List<Referance> referances;
+    private List<Reference> referances;
 
     @OneToMany(mappedBy = "user")
     private List<Skill> skills;
