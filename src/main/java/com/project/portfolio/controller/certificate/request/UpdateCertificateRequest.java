@@ -29,4 +29,5 @@ public class UpdateCertificateRequest {
     @NotBlank
     private String certificateSiteLink;
     private String serialNumber;
+    private int userId;
 }
