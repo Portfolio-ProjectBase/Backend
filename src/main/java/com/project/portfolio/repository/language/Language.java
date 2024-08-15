@@ -1,5 +1,6 @@
 package com.project.portfolio.repository.language;
 
+import com.project.portfolio.controller.language.language.response.LanguageResponse;
 import com.project.portfolio.core.Base;
 import com.project.portfolio.repository.user.User;
 import jakarta.persistence.*;
@@ -27,4 +28,18 @@ public class Language extends Base {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public LanguageResponse toResponse(){
+        return LanguageResponse.builder()
+                .id(getId())
+                .name(getName())
+                .build();
+    }
+
+    public static Language fromResponse(LanguageResponse languageResponse){
+        return Language.builder()
+                .id(languageResponse.getId())
+                .name(languageResponse.getName())
+                .build();
+    }
 }

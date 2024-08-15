@@ -1,7 +1,6 @@
-package com.project.portfolio.controller.skill.request;
+package com.project.portfolio.controller.language.language.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,17 +10,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreateSkillRequest {
+public class CreateLanguageRequest {
 
     @NotBlank
     private String name;
 
     @NotBlank
-    private int projectId;
-
-    @NotBlank
-    private int postId;
-
-    @NotBlank
     private int userId;
+
+    @NotBlank
+    private int levelId;
 }
