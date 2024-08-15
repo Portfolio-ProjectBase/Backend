@@ -1,15 +1,13 @@
 package com.project.portfolio.controller.project.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class ProjectResponse {
     int id;
     String title;
@@ -17,5 +15,4 @@ public class ProjectResponse {
     LocalDate projectDate;
     String liveSiteLink;
     String githubLink;
-    int skillId;
 }

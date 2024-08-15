@@ -1,4 +1,4 @@
-package com.project.portfolio.controller.socialMedia.response;
+package com.project.portfolio.controller.language.language.response;
 
 import lombok.*;
 
@@ -7,8 +7,8 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class SocialMediaResponse {
+public class LanguageResponse {
+
     private int id;
     private String name;
-    private String link;
 }

@@ -22,7 +22,7 @@ public class UpdatePostRequest {
     private String detail;
 
     @NotNull
-    private int skillId;
+    private int userId;
 
     boolean isActive;
     boolean isDeleted;

@@ -18,4 +18,6 @@ public class UpdateSocialMediaRequest {
     private String name;
     @NotBlank
     private String link;
+    @NotBlank
+    private int userId;
 }

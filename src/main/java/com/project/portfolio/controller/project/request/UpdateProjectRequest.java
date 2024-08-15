@@ -27,5 +27,5 @@ public class UpdateProjectRequest {
     @NotBlank
     private String githubLink;
     @NotNull
-    private int skillId;
+    private int userId;
 }

@@ -1,4 +1,4 @@
-package com.project.portfolio.controller.project.request;
+package com.project.portfolio.controller.language.language.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,23 +7,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreateProjectRequest {
-    @NotBlank
-    private String title;
-    @NotBlank
-    private String detail;
+public class UpdateLanguageRequest {
+
     @NotNull
-    private LocalDate projectDate;
+    private int id;
+
     @NotBlank
-    private String liveSiteLink;
+    private String name;
+
     @NotBlank
-    private String githubLink;
-    @NotNull
     private int userId;
+
+    @NotBlank
+    private int levelId;
 }
