@@ -27,5 +27,5 @@ public class CreateExperienceRequest {
     private LocalDate startDate;
 
     @NotNull
-    private LocalDate endDate;
+    private LocalDate finishDate;
 }

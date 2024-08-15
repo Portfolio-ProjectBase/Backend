@@ -19,10 +19,11 @@ public class UpdateUserRequest {
     @NotBlank
     private String surname;
     @NotBlank
-    private String role;
-    @NotBlank
     private String emailAddress;
     @NotBlank
     private String password;
-    private String resumeUrl;
+    @NotBlank
+    private String aboutMe;
+    @NotBlank
+    private String detail;
 }

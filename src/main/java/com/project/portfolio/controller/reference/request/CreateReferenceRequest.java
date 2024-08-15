@@ -1,4 +1,4 @@
-package com.project.portfolio.controller.referance.request;
+package com.project.portfolio.controller.reference.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreateReferanceRequest {
+public class CreateReferenceRequest {
     @NotBlank
     private String name;
     @NotBlank
     private String surname;
     @NotBlank
     private String emailAddress;
+    private int userId;
 
 }

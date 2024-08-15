@@ -1,5 +1,6 @@
 package com.project.portfolio.repository.user;
 
+import com.project.portfolio.controller.user.response.UserResponse;
 import com.project.portfolio.core.Base;
 import com.project.portfolio.repository.certificate.Certificate;
 import com.project.portfolio.repository.course.Course;
@@ -9,7 +10,7 @@ import com.project.portfolio.repository.hobby.Hobby;
 import com.project.portfolio.repository.language.Language;
 import com.project.portfolio.repository.post.Post;
 import com.project.portfolio.repository.project.Project;
-import com.project.portfolio.repository.referance.Referance;
+import com.project.portfolio.repository.reference.Referance;
 import com.project.portfolio.repository.resume.Resume;
 import com.project.portfolio.repository.skill.Skill;
 import com.project.portfolio.repository.socialMedia.SocialMedia;
@@ -17,10 +18,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -29,6 +28,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@SuperBuilder
 @Table(name = "Users")
 public class User extends Base {
     @Column(name = "name")
@@ -41,8 +41,6 @@ public class User extends Base {
     private String password;
     @Column(name = "about_me")
     private String aboutMe;
-    @Column(name = "interests")
-    private List<String> interests;
     @Column(name = "detail")
     private String detail;
 
@@ -81,5 +79,28 @@ public class User extends Base {
 
     @OneToMany(mappedBy = "user")
     private List<Resume> resumes;
+
+    public UserResponse toResponse(){
+        return UserResponse.builder()
+                .id(getId())
+                .name(getName())
+                .surname(getSurname())
+                .detail(getDetail())
+                .emailAddress(getEmailAddress())
+                .aboutMe(getAboutMe())
+                .password(getPassword())
+                .build();
+    }
+    public static User fromResponse(UserResponse response){
+        return User.builder()
+                .id(response.getId())
+                .name(response.getName())
+                .surname(response.getSurname())
+                .detail(response.getDetail())
+                .emailAddress(response.getEmailAddress())
+                .aboutMe(response.getAboutMe())
+                .password(response.getPassword())
+                .build();
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.project.portfolio.repository.experience;
 
+import com.project.portfolio.controller.experience.response.ExperienceResponse;
 import com.project.portfolio.core.Base;
 import com.project.portfolio.repository.user.User;
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
@@ -15,6 +17,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
+@SuperBuilder
 @Table(name = "Experiences")
 public class Experience extends Base {
     @Column(name = "department_title")
@@ -25,11 +28,31 @@ public class Experience extends Base {
     private String detail;
     @Column(name = "start_date")
     private LocalDate startDate;
-    @Column(name = "end_date")
-    private LocalDate endDate;
+    @Column(name = "finish_date")
+    private LocalDate finishDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    public ExperienceResponse toResponse(){
+        return ExperienceResponse.builder()
+                .id(getId())
+                .departmentTitle(getDepartmentTitle())
+                .workplace(getWorkplace())
+                .detail(getDetail())
+                .startDate(getStartDate())
+                .finishDate(getFinishDate())
+                .build();
+    }
+    public Experience fromRepository(ExperienceResponse response){
+        return Experience.builder()
+                .id(getId())
+                .departmentTitle(getDepartmentTitle())
+                .workplace(getWorkplace())
+                .detail(getDetail())
+                .startDate(getStartDate())
+                .finishDate(getFinishDate())
+                .build();
+    }
 }

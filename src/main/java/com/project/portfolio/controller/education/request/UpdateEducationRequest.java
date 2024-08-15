@@ -23,4 +23,6 @@ public class UpdateEducationRequest {
     private Date finishDate;
     @NotBlank
     private String major;
+    @NotBlank
+    private int userId;
 }

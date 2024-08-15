@@ -1,4 +1,4 @@
-package com.project.portfolio.controller.referance.request;
+package com.project.portfolio.controller.reference.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UpdateReferanceRequest {
+public class UpdateReferenceRequest {
     @NotNull
     private int id;
     @NotBlank
@@ -20,5 +20,7 @@ public class UpdateReferanceRequest {
     private String surname;
     @NotBlank
     private String emailAddress;
+    @NotNull
+    private int userId;
 
 }
