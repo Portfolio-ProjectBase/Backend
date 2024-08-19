@@ -20,6 +20,4 @@ public class CreateResumeRequest {
 
     private String fileType;
 
-    private int userId;
-
 }

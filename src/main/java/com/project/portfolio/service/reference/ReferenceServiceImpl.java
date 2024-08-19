@@ -49,7 +49,6 @@ public class ReferenceServiceImpl implements ReferenceService{
                 .name(request.getName())
                 .surname(request.getSurname())
                 .emailAddress(request.getEmailAddress())
-                .user(User.fromResponse(userService.getById(request.getUserId())))
                 .build();
     }
     public Reference toEntity(UpdateReferenceRequest request){
@@ -58,7 +57,6 @@ public class ReferenceServiceImpl implements ReferenceService{
                 .name(request.getName())
                 .surname(request.getSurname())
                 .emailAddress(request.getEmailAddress())
-                .user(User.fromResponse(userService.getById(request.getUserId())))
                 .build();
     }
 }

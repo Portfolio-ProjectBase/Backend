@@ -21,9 +21,6 @@ public class UpdatePostRequest {
     @NotBlank
     private String detail;
 
-    @NotNull
-    private int userId;
-
     boolean isActive;
     boolean isDeleted;
 }

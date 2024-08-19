@@ -61,7 +61,6 @@ public class ResumeServiceImpl implements ResumeService{
                 .name(resumeRequest.getName())
                 .fileUrl(resumeRequest.getFileUrl())
                 .fileType(resumeRequest.getFileType())
-                .user(User.fromResponse(userService.getById(resumeRequest.getUserId())))
                 .build();
     }
 
@@ -71,7 +70,6 @@ public class ResumeServiceImpl implements ResumeService{
                 .name(resumeRequest.getName())
                 .fileUrl(resumeRequest.getFileUrl())
                 .fileType(resumeRequest.getFileType())
-                .user(User.fromResponse(userService.getById(resumeRequest.getUserId())))
                 .build();
     }
 

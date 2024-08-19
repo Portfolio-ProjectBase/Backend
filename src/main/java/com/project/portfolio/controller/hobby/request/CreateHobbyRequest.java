@@ -12,6 +12,5 @@ public class CreateHobbyRequest {
     @NotBlank
     private String name;
 
-    private int userId;
 
 }

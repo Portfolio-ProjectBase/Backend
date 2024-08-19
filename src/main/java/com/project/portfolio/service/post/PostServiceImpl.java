@@ -51,7 +51,6 @@ public class PostServiceImpl implements PostService {
                 .detail(request.getDetail())
                 .isActive(request.isActive())
                 .isDeleted(request.isDeleted())
-                .user(User.fromResponse(userService.getById(request.getUserId())))
                 .build();
     }
 
@@ -62,7 +61,6 @@ public class PostServiceImpl implements PostService {
                 .detail(request.getDetail())
                 .isActive(request.isActive())
                 .isDeleted(request.isDeleted())
-                .user(User.fromResponse(userService.getById(request.getUserId())))
                 .build();
   }
 }

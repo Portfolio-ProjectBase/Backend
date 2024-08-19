@@ -15,6 +15,4 @@ public class CreateSocialMediaRequest {
     private String name;
     @NotBlank
     private String link;
-    @NotBlank
-    private int userId;
 }

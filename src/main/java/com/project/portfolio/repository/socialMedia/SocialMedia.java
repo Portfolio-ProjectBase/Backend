@@ -26,10 +26,6 @@ public class SocialMedia extends Base {
     @Column(name = "link")
     private String link;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     public SocialMediaResponse toResponse(){
         return SocialMediaResponse.builder()
                 .id(getId())

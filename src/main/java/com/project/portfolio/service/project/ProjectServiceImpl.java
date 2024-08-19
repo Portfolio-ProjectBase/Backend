@@ -52,7 +52,6 @@ public class ProjectServiceImpl implements ProjectService{
                 .projectDate(createProjectRequest.getProjectDate())
                 .liveSiteLink(createProjectRequest.getLiveSiteLink())
                 .githubLink(createProjectRequest.getGithubLink())
-                .user(User.fromResponse(userService.getById(createProjectRequest.getUserId())))
                 .build();
     }
 
@@ -64,7 +63,6 @@ public class ProjectServiceImpl implements ProjectService{
                 .projectDate(updateProjectRequest.getProjectDate())
                 .liveSiteLink(updateProjectRequest.getLiveSiteLink())
                 .githubLink(updateProjectRequest.getGithubLink())
-                .user(User.fromResponse(userService.getById(updateProjectRequest.getUserId())))
                 .build();
     }
 }

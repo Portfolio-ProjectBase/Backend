@@ -48,7 +48,6 @@ public class EducationServiceImpl implements EducationService{
                 .startDate(request.getStartDate())
                 .finishDate(request.getFinishDate())
                 .major(request.getMajor())
-                .user(User.fromResponse(userService.getById(request.getUserId())))
                 .build();
     }
     public Education toEntity(UpdateEducationRequest request){
@@ -58,7 +57,6 @@ public class EducationServiceImpl implements EducationService{
                 .startDate(request.getStartDate())
                 .finishDate(request.getFinishDate())
                 .major(request.getMajor())
-                .user(User.fromResponse(userService.getById(request.getUserId())))
                 .build();
     }
 }

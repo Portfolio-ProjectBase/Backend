@@ -26,17 +26,10 @@ public class Skill extends Base {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
-
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post post;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany
+    private List<Post> posts;
+    @ManyToMany
+    private List<Project> projects;
 
     public SkillResponse toResponse(){
         return SkillResponse.builder()

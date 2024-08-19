@@ -26,6 +26,4 @@ public class UpdateProjectRequest {
     private String liveSiteLink;
     @NotBlank
     private String githubLink;
-    @NotNull
-    private int userId;
 }

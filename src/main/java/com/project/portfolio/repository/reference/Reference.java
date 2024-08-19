@@ -25,9 +25,6 @@ public class Reference extends Base {
     @Column(name = "email_address")
     private String emailAddress;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public ReferenceResponse toResponse(){
         return ReferenceResponse.builder()

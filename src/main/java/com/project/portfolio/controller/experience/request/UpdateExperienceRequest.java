@@ -21,6 +21,8 @@ public class UpdateExperienceRequest {
     private String workplace;
     @NotBlank
     private String detail;
+    @NotBlank
+    private String position;
     @NotNull
     private LocalDate startDate;
     @NotNull

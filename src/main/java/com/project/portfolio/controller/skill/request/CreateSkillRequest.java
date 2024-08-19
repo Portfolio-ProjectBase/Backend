@@ -22,6 +22,4 @@ public class CreateSkillRequest {
     @NotBlank
     private int postId;
 
-    @NotBlank
-    private int userId;
 }

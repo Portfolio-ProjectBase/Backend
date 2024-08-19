@@ -25,10 +25,6 @@ public class Language extends Base {
     @JoinColumn(name = "level_id")
     private LanguageLevel languageLevel;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     public LanguageResponse toResponse(){
         return LanguageResponse.builder()
                 .id(getId())

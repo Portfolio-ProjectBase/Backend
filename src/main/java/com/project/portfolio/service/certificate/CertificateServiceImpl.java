@@ -63,7 +63,6 @@ public class CertificateServiceImpl implements CertificateService{
                 .givenDate(certificateRequest.getGivenDate())
                 .organisationName(certificateRequest.getOrganisationName())
                 .serialNumber(certificateRequest.getSerialNumber())
-                .user(User.fromResponse(userService.getById(certificateRequest.getUserId())))
                 .build();
     }
 
@@ -75,7 +74,6 @@ public class CertificateServiceImpl implements CertificateService{
                 .givenDate(certificateRequest.getGivenDate())
                 .organisationName(certificateRequest.getOrganisationName())
                 .serialNumber(certificateRequest.getSerialNumber())
-                .user(User.fromResponse(userService.getById(certificateRequest.getUserId())))
                 .build();
     }
 

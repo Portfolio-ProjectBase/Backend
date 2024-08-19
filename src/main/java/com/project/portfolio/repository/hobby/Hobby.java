@@ -22,9 +22,6 @@ public class Hobby extends Base {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public HobbyResponse toResponse(){
         return HobbyResponse.builder()

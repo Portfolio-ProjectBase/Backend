@@ -17,6 +17,5 @@ public class CreateReferenceRequest {
     private String surname;
     @NotBlank
     private String emailAddress;
-    private int userId;
 
 }

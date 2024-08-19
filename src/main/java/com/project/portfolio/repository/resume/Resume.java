@@ -28,9 +28,6 @@ public class Resume extends Base {
     @Column(name = "file_url", nullable = false)
     private String fileUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public ResumeResponse toResponse(){
         return ResumeResponse.builder()

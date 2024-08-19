@@ -26,14 +26,13 @@ public class Experience extends Base {
     private String workplace;
     @Column(name = "detail")
     private String detail;
+    @Column(name = "position")
+    private String position;
     @Column(name = "start_date")
     private LocalDate startDate;
     @Column(name = "finish_date")
     private LocalDate finishDate;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public ExperienceResponse toResponse(){
         return ExperienceResponse.builder()
@@ -41,6 +40,7 @@ public class Experience extends Base {
                 .departmentTitle(getDepartmentTitle())
                 .workplace(getWorkplace())
                 .detail(getDetail())
+                .position(getPosition())
                 .startDate(getStartDate())
                 .finishDate(getFinishDate())
                 .build();
@@ -51,6 +51,7 @@ public class Experience extends Base {
                 .departmentTitle(getDepartmentTitle())
                 .workplace(getWorkplace())
                 .detail(getDetail())
+                .position(getPosition())
                 .startDate(getStartDate())
                 .finishDate(getFinishDate())
                 .build();

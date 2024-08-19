@@ -20,7 +20,5 @@ public class UpdateReferenceRequest {
     private String surname;
     @NotBlank
     private String emailAddress;
-    @NotNull
-    private int userId;
 
 }

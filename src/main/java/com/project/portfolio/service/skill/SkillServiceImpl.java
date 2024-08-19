@@ -57,9 +57,6 @@ public class SkillServiceImpl implements SkillService{
     public Skill toEntity(CreateSkillRequest createSkillRequest){
         return Skill.builder()
                 .name(createSkillRequest.getName())
-                .project(Project.fromResponse(projectService.getById(createSkillRequest.getProjectId())))
-                .post(Post.fromResponse(postService.getById(createSkillRequest.getPostId())))
-                .user(User.fromResponse(userService.getById(createSkillRequest.getUserId())))
                 .build();
     }
 
@@ -67,9 +64,6 @@ public class SkillServiceImpl implements SkillService{
         return Skill.builder()
                 .id(updateSkillRequest.getId())
                 .name(updateSkillRequest.getName())
-                .project(Project.fromResponse(projectService.getById(updateSkillRequest.getProjectId())))
-                .post(Post.fromResponse(postService.getById(updateSkillRequest.getPostId())))
-                .user(User.fromResponse(userService.getById(updateSkillRequest.getUserId())))
                 .build();
     }
 

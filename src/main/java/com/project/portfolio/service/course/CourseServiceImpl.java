@@ -62,7 +62,6 @@ public class CourseServiceImpl implements CourseService{
                 .instructor(courseRequest.getInstructor())
                 .detail(courseRequest.getDetail())
                 .date(courseRequest.getDate())
-                .user(User.fromResponse(userService.getById(courseRequest.getUserId())))
                 .build();
     }
 
@@ -73,7 +72,6 @@ public class CourseServiceImpl implements CourseService{
                 .instructor(courseRequest.getInstructor())
                 .detail(courseRequest.getDetail())
                 .date(courseRequest.getDate())
-                .user(User.fromResponse(userService.getById(courseRequest.getUserId())))
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.project.portfolio.controller.experience.response;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ public class ExperienceResponse {
     String departmentTitle;
     String workplace;
     String detail;
+    String position;
     LocalDate startDate;
     LocalDate finishDate;
 }

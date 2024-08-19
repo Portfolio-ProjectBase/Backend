@@ -29,9 +29,6 @@ public class Course extends Base {
     private String detail;
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public CourseResponse toResponse() {
         return CourseResponse.builder()

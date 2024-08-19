@@ -24,6 +24,4 @@ public class UpdateSkillRequest {
     @NotBlank
     private int postId;
 
-    @NotBlank
-    private int userId;
 }

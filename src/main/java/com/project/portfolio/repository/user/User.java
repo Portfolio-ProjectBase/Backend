@@ -14,10 +14,7 @@ import com.project.portfolio.repository.reference.Reference;
 import com.project.portfolio.repository.resume.Resume;
 import com.project.portfolio.repository.skill.Skill;
 import com.project.portfolio.repository.socialMedia.SocialMedia;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -44,41 +41,6 @@ public class User extends Base {
     @Column(name = "detail")
     private String detail;
 
-    @OneToMany(mappedBy = "user")
-    private List<Certificate> certificates;
-
-    @OneToMany(mappedBy = "user")
-    private List<Course> courses;
-
-    @OneToMany(mappedBy = "user")
-    private List<Education> educations;
-
-    @OneToMany(mappedBy = "user")
-    private List<Experience> experiences;
-
-    @OneToMany(mappedBy = "user")
-    private List<Hobby> hobbies;
-
-    @OneToMany(mappedBy = "user")
-    private List<Language> languages;
-
-    @OneToMany(mappedBy = "user")
-    private List<Post> posts;
-
-    @OneToMany(mappedBy = "user")
-    private List<Project> projects;
-
-    @OneToMany(mappedBy = "user")
-    private List<Reference> referances;
-
-    @OneToMany(mappedBy = "user")
-    private List<Skill> skills;
-
-    @OneToMany(mappedBy = "user")
-    private List<SocialMedia> socialMedias;
-
-    @OneToMany(mappedBy = "user")
-    private List<Resume> resumes;
 
     public UserResponse toResponse(){
         return UserResponse.builder()

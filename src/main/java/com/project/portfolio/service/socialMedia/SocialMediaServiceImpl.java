@@ -49,7 +49,6 @@ public class SocialMediaServiceImpl implements SocialMediaService{
         return SocialMedia.builder()
                 .name(createSocialMediaRequest.getName())
                 .link(createSocialMediaRequest.getLink())
-                .user(User.fromResponse(userService.getById(createSocialMediaRequest.getUserId())))
                 .build();
     }
 
@@ -58,7 +57,6 @@ public class SocialMediaServiceImpl implements SocialMediaService{
                 .id(updateSocialMediaRequest.getId())
                 .name(updateSocialMediaRequest.getName())
                 .link(updateSocialMediaRequest.getLink())
-                .user(User.fromResponse(userService.getById(updateSocialMediaRequest.getUserId())))
                 .build();
     }
 }

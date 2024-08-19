@@ -52,7 +52,6 @@ public class LanguageServiceImpl implements LanguageService {
         return Language.builder()
                 .name(createLanguageRequest.getName())
                 .languageLevel(LanguageLevel.fromResponse(languageLevelService.getById(createLanguageRequest.getLevelId())))
-                .user(User.fromResponse(userService.getById(createLanguageRequest.getUserId())))
                 .build();
     }
 
@@ -61,7 +60,6 @@ public class LanguageServiceImpl implements LanguageService {
                 .id(updateLanguageRequest.getId())
                 .name(updateLanguageRequest.getName())
                 .languageLevel(LanguageLevel.fromResponse(languageLevelService.getById(updateLanguageRequest.getLevelId())))
-                .user(User.fromResponse(userService.getById(updateLanguageRequest.getUserId())))
                 .build();
     }
 

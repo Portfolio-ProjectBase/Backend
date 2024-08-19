@@ -28,9 +28,6 @@ public class Education extends Base {
     @Column(name = "major")
     private String major;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public EducationResponse toResponse(){
         return EducationResponse.builder()

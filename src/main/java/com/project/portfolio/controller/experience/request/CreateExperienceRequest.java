@@ -22,6 +22,8 @@ public class CreateExperienceRequest {
 
     @NotBlank
     private String detail;
+    @NotBlank
+    private String position;
 
     @NotNull
     private LocalDate startDate;

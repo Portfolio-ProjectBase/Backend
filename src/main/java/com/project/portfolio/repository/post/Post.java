@@ -29,12 +29,10 @@ public class Post extends Base {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @OneToMany(mappedBy = "post")
+    @ManyToMany(mappedBy = "posts")
     private List<Skill> skills;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
 
     public PostResponse toResponse(){
         return PostResponse.builder()

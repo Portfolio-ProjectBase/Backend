@@ -16,18 +16,13 @@ import java.time.LocalDate;
 public class UpdateCertificateRequest {
     @NotNull
     private int id;
-
     @NotBlank
     private String name;
-
     @NotBlank
     private String organisationName;
-
     @NotNull
     private LocalDate givenDate;
-
     @NotBlank
     private String certificateSiteLink;
     private String serialNumber;
-    private int userId;
 }

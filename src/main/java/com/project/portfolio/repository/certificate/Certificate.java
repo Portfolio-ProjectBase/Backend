@@ -31,9 +31,6 @@ public class Certificate extends Base {
     @Column(name = "serial_number")
     private String serialNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public CertificateResponse toResponse(){
         return CertificateResponse.builder()

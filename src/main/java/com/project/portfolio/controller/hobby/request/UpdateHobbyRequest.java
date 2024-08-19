@@ -17,5 +17,4 @@ public class UpdateHobbyRequest {
 
     @NotBlank
     private String name;
-    private int userId;
 }

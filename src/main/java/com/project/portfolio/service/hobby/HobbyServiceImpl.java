@@ -58,7 +58,6 @@ public class HobbyServiceImpl implements HobbyService{
     public Hobby toEntity(CreateHobbyRequest hobbyRequest){
         return Hobby.builder()
                 .name(hobbyRequest.getName())
-                .user(User.fromResponse(userService.getById(hobbyRequest.getUserId())))
                 .build();
     }
 
@@ -66,7 +65,6 @@ public class HobbyServiceImpl implements HobbyService{
         return Hobby.builder()
                 .id(hobbyRequest.getId())
                 .name(hobbyRequest.getName())
-                .user(User.fromResponse(userService.getById(hobbyRequest.getUserId())))
                 .build();
     }
 }

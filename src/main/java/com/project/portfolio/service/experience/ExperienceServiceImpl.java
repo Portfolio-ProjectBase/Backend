@@ -49,6 +49,7 @@ public class ExperienceServiceImpl implements ExperienceService{
                     .startDate(request.getStartDate())
                     .finishDate(request.getFinishDate())
                     .detail(request.getDetail())
+                    .position(request.getPosition())
                     .build();
 
     }
@@ -60,6 +61,7 @@ public class ExperienceServiceImpl implements ExperienceService{
                 .startDate(request.getStartDate())
                 .finishDate(request.getFinishDate())
                 .detail(request.getDetail())
+                .position(request.getPosition())
                 .build();
     }
 }

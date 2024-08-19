@@ -20,7 +20,5 @@ public class CreateEducationRequest {
     private Date finishDate;
     @NotBlank
     private String major;
-    @NotBlank
-    private int userId;
 
 }

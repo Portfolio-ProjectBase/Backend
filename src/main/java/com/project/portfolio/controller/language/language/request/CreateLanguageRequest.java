@@ -16,8 +16,5 @@ public class CreateLanguageRequest {
     private String name;
 
     @NotBlank
-    private int userId;
-
-    @NotBlank
     private int levelId;
 }

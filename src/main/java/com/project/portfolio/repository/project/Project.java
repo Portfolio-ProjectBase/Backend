@@ -34,12 +34,10 @@ public class Project extends Base {
     @Column(name = "github_link")
     private String githubLink;
 
-    @OneToMany(mappedBy = "project")
+    @ManyToMany(mappedBy = "projects")
     private List<Skill> skills;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
 
     public ProjectResponse toResponse(){
         return ProjectResponse.builder()

@@ -23,6 +23,4 @@ public class UpdateResumeRequest {
 
     private String fileType;
 
-    private int userId;
-
 }
