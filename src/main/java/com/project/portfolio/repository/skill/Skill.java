@@ -26,9 +26,10 @@ public class Skill extends Base {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "skills")
     private List<Post> posts;
-    @ManyToMany
+
+    @ManyToMany(mappedBy = "skills")
     private List<Project> projects;
 
     public SkillResponse toResponse(){
@@ -44,5 +45,4 @@ public class Skill extends Base {
                 .name(skillResponse.getName())
                 .build();
     }
-
 }

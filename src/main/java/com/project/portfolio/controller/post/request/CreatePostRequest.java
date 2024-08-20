@@ -7,18 +7,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreatePostRequest {
-    @NotBlank
     private String title;
-
-    @NotBlank
     private String detail;
-
-    boolean isActive;
-    private int skillId;
+    private boolean isActive;
+    private List<Integer> skillIds; // Skill id'leri üzerinden ilişki kurulacak
 
 }

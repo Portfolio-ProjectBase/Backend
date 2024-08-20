@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,4 +24,5 @@ public class UpdatePostRequest {
     private String detail;
 
     boolean isActive;
+    private List<Integer> skillIds;
 }

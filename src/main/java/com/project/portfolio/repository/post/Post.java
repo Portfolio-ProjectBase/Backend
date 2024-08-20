@@ -29,10 +29,13 @@ public class Post extends Base {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @ManyToMany(mappedBy = "posts")
+    @ManyToMany
+    @JoinTable(
+            name = "post_skill",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
     private List<Skill> skills;
-
-
 
     public PostResponse toResponse(){
         return PostResponse.builder()
@@ -41,7 +44,7 @@ public class Post extends Base {
                 .detail(getDetail())
                 .isActive(isActive())
                 .isDeleted(getIsDeleted())
-                .skills(skills.stream().map(Skill::toResponse).collect(Collectors.toList())) // Convert Skill entities to SkillResponse
+                .skills(skills.stream().map(Skill::toResponse).collect(Collectors.toList()))
                 .build();
     }
 
@@ -53,13 +56,12 @@ public class Post extends Base {
                 .isActive(response.isActive())
                 .isDeleted(response.isDeleted())
                 .skills(response.getSkills().stream()
-                   .map(skillResponse -> Skill.builder()
-                          .id(skillResponse.getId())
-                            .name(skillResponse.getName())
-                           .build())
-                   .collect(Collectors.toList()))
+                        .map(skillResponse -> Skill.builder()
+                                .id(skillResponse.getId())
+                                .name(skillResponse.getName())
+                                .build())
+                        .collect(Collectors.toList()))
                 .build();
-
-
     }
 }
+

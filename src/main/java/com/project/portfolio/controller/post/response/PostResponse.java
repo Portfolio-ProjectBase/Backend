@@ -11,10 +11,10 @@ import java.util.List;
 @Setter
 @Builder
 public class PostResponse {
-    int id;
-    String title;
-    String detail;
-    boolean isActive;
-    boolean isDeleted;
-    private List<SkillResponse> skills;
+    private int id;
+    private String title;
+    private String detail;
+    private boolean isActive;
+    private boolean isDeleted;
+    private List<SkillResponse> skills; // SkillResponse objeleriyle ilişkilendirilmiş Skill'ler
 }

@@ -8,20 +8,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class CreateProjectRequest {
-    @NotBlank
     private String title;
-    @NotBlank
     private String detail;
-    @NotNull
     private LocalDate projectDate;
-    @NotBlank
     private String liveSiteLink;
-    @NotBlank
     private String githubLink;
+    private List<Integer> skillIds; // Skill id'leri üzerinden ilişki kurulacak
 }

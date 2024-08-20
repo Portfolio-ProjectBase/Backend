@@ -3,29 +3,36 @@ package com.project.portfolio.service.skill;
 import com.project.portfolio.controller.skill.request.CreateSkillRequest;
 import com.project.portfolio.controller.skill.request.UpdateSkillRequest;
 import com.project.portfolio.controller.skill.response.SkillResponse;
+import com.project.portfolio.repository.post.Post;
+import com.project.portfolio.repository.post.PostRepository;
+import com.project.portfolio.repository.project.Project;
+import com.project.portfolio.repository.project.ProjectRepository;
 import com.project.portfolio.repository.skill.Skill;
 import com.project.portfolio.repository.skill.SkillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class SkillServiceImpl implements SkillService{
 
     private final SkillRepository skillRepository;
+    private final PostRepository postRepository;
+    private final ProjectRepository projectRepository;
 
     @Override
     public void create(CreateSkillRequest createSkillRequest) {
-        skillRepository.save(toEntity(createSkillRequest));
-
+        Skill skill = toEntity(createSkillRequest);
+        skillRepository.save(skill);
     }
 
     @Override
     public void update(UpdateSkillRequest updateSkillRequest) {
-        skillRepository.save(toEntity(updateSkillRequest));
-
+        Skill skill = toEntity(updateSkillRequest);
+        skillRepository.save(skill);
     }
 
     @Override
@@ -44,21 +51,20 @@ public class SkillServiceImpl implements SkillService{
     @Override
     public void delete(int id) {
         skillRepository.deleteById(id);
-
     }
 
-    public Skill toEntity(CreateSkillRequest createSkillRequest){
+    public Skill toEntity(CreateSkillRequest createSkillRequest) {
+
+
         return Skill.builder()
                 .name(createSkillRequest.getName())
                 .build();
     }
 
-    public Skill toEntity(UpdateSkillRequest updateSkillRequest){
+    public Skill toEntity(UpdateSkillRequest updateSkillRequest) {
         return Skill.builder()
                 .id(updateSkillRequest.getId())
                 .name(updateSkillRequest.getName())
                 .build();
     }
-
-
 }

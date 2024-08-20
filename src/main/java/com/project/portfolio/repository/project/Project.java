@@ -3,7 +3,6 @@ package com.project.portfolio.repository.project;
 import com.project.portfolio.controller.project.response.ProjectResponse;
 import com.project.portfolio.core.Base;
 import com.project.portfolio.repository.skill.Skill;
-import com.project.portfolio.repository.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,10 +34,13 @@ public class Project extends Base {
     @Column(name = "github_link")
     private String githubLink;
 
-    @ManyToMany(mappedBy = "projects")
+    @ManyToMany
+    @JoinTable(
+            name = "project_skill",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
     private List<Skill> skills;
-
-
 
     public ProjectResponse toResponse(){
         return ProjectResponse.builder()
@@ -47,19 +50,25 @@ public class Project extends Base {
                 .projectDate(getProjectDate())
                 .liveSiteLink(getLiveSiteLink())
                 .githubLink(getGithubLink())
+                .skills(skills.stream().map(Skill::toResponse).collect(Collectors.toList()))
                 .build();
     }
 
-    public static Project fromResponse(ProjectResponse projectResponse){
+    public static Project fromResponse(ProjectResponse response){
         return Project.builder()
-                .id(projectResponse.getId())
-                .title(projectResponse.getTitle())
-                .detail(projectResponse.getDetail())
-                .projectDate(projectResponse.getProjectDate())
-                .liveSiteLink(projectResponse.getLiveSiteLink())
-                .githubLink(projectResponse.getGithubLink())
+                .id(response.getId())
+                .title(response.getTitle())
+                .detail(response.getDetail())
+                .projectDate(response.getProjectDate())
+                .liveSiteLink(response.getLiveSiteLink())
+                .githubLink(response.getGithubLink())
+                .skills(response.getSkills().stream()
+                        .map(skillResponse -> Skill.builder()
+                                .id(skillResponse.getId())
+                                .name(skillResponse.getName())
+                                .build())
+                        .collect(Collectors.toList()))
                 .build();
-
     }
-
 }
+
