@@ -5,8 +5,6 @@ import com.project.portfolio.controller.hobby.request.UpdateHobbyRequest;
 import com.project.portfolio.controller.hobby.response.HobbyResponse;
 import com.project.portfolio.repository.hobby.Hobby;
 import com.project.portfolio.repository.hobby.HobbyRepository;
-import com.project.portfolio.repository.user.User;
-import com.project.portfolio.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +15,6 @@ import java.util.List;
 public class HobbyServiceImpl implements HobbyService{
 
     private final HobbyRepository hobbyRepository;
-    private final UserService userService;
 
     @Override
     public void create(CreateHobbyRequest hobbyRequest) {
@@ -29,6 +26,7 @@ public class HobbyServiceImpl implements HobbyService{
     @Override
     public void update(UpdateHobbyRequest hobbyRequest) {
 
+        getById(hobbyRequest.getId());
         hobbyRepository.save(toEntity(hobbyRequest));
 
     }
@@ -44,7 +42,10 @@ public class HobbyServiceImpl implements HobbyService{
     @Override
     public HobbyResponse getById(int id) {
 
-        return hobbyRepository.findById(id).orElseThrow().toResponse();
+        return hobbyRepository.findById(id)
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Hobby not found with id: " + id))
+                .toResponse();
 
     }
 

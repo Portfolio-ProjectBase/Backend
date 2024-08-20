@@ -1,11 +1,12 @@
 package com.project.portfolio.controller.user;
 
+import com.project.portfolio.controller.BaseController;
+import com.project.portfolio.controller.user.request.UpdateUserRequest;
+import com.project.portfolio.service.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -16,7 +17,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/users")
-public class UserController {
+@RequiredArgsConstructor
+public class UserController extends BaseController {
+
+    private final UserService userService;
+
     @PostMapping("/uploadResume")
     public ResponseEntity<String> uploadResume(@RequestParam("file") MultipartFile file) {
         try {
@@ -41,5 +46,13 @@ public class UserController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Dosya yüklenirken bir hata oluştu.");
         }
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody UpdateUserRequest userRequest){
+
+        userService.update(userRequest);
+        return answer(HttpStatus.NO_CONTENT);
+
     }
 }

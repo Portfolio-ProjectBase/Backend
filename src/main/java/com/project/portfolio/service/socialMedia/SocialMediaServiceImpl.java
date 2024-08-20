@@ -5,8 +5,6 @@ import com.project.portfolio.controller.socialMedia.request.UpdateSocialMediaReq
 import com.project.portfolio.controller.socialMedia.response.SocialMediaResponse;
 import com.project.portfolio.repository.socialMedia.SocialMedia;
 import com.project.portfolio.repository.socialMedia.SocialMediaRepository;
-import com.project.portfolio.repository.user.User;
-import com.project.portfolio.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +15,6 @@ import java.util.List;
 public class SocialMediaServiceImpl implements SocialMediaService{
 
     private final SocialMediaRepository socialMediaRepository;
-    private final UserService userService;
 
     @Override
     public void create(CreateSocialMediaRequest createSocialMediaRequest) {
@@ -26,7 +23,8 @@ public class SocialMediaServiceImpl implements SocialMediaService{
 
     @Override
     public void update(UpdateSocialMediaRequest updateSocialMediaRequest) {
-       socialMediaRepository.save(toEntity(updateSocialMediaRequest));
+        getById(updateSocialMediaRequest.getId());
+        socialMediaRepository.save(toEntity(updateSocialMediaRequest));
     }
 
     @Override
@@ -37,7 +35,10 @@ public class SocialMediaServiceImpl implements SocialMediaService{
 
     @Override
     public SocialMediaResponse getById(int id) {
-        return socialMediaRepository.findById(id).orElseThrow().toResponse();
+        return socialMediaRepository.findById(id)
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Social Media not found with id: " + id))
+                .toResponse();
     }
 
     @Override
