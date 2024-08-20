@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EducationServiceImpl implements EducationService{
     private final EducationRepository repository;
-    private final UserService userService;
     @Override
     public void create(CreateEducationRequest createEducationRequest) {
         repository.save(toEntity(createEducationRequest));

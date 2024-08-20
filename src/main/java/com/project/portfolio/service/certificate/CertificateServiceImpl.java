@@ -17,7 +17,6 @@ import java.util.List;
 public class CertificateServiceImpl implements CertificateService{
 
     private final CertificateRepository certificateRepository;
-    private final UserService userService;
 
     @Override
     public void create(CreateCertificateRequest certificateRequest) {

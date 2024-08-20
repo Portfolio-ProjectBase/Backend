@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReferenceServiceImpl implements ReferenceService{
     private final ReferenceRepository repository;
-    private final UserService userService;
 
     @Override
     public void create(CreateReferenceRequest createReferenceRequest) {
