@@ -3,14 +3,8 @@ package com.project.portfolio.service.skill;
 import com.project.portfolio.controller.skill.request.CreateSkillRequest;
 import com.project.portfolio.controller.skill.request.UpdateSkillRequest;
 import com.project.portfolio.controller.skill.response.SkillResponse;
-import com.project.portfolio.repository.post.Post;
-import com.project.portfolio.repository.project.Project;
 import com.project.portfolio.repository.skill.Skill;
 import com.project.portfolio.repository.skill.SkillRepository;
-import com.project.portfolio.repository.user.User;
-import com.project.portfolio.service.post.PostService;
-import com.project.portfolio.service.project.ProjectService;
-import com.project.portfolio.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +15,6 @@ import java.util.List;
 public class SkillServiceImpl implements SkillService{
 
     private final SkillRepository skillRepository;
-    private final UserService userService;
-    private final ProjectService projectService;
-    private final PostService postService;
 
     @Override
     public void create(CreateSkillRequest createSkillRequest) {
@@ -45,7 +36,9 @@ public class SkillServiceImpl implements SkillService{
 
     @Override
     public SkillResponse getById(int id) {
-        return skillRepository.findById(id).orElseThrow().toResponse();
+        Skill skill = skillRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Skill not found with id: " + id));
+        return skill.toResponse();
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.project.portfolio.controller.post.response;
 
+import com.project.portfolio.controller.skill.response.SkillResponse;
 import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,4 +16,5 @@ public class PostResponse {
     String detail;
     boolean isActive;
     boolean isDeleted;
+    private List<SkillResponse> skills;
 }

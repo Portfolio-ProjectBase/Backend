@@ -22,5 +22,4 @@ public class UpdatePostRequest {
     private String detail;
 
     boolean isActive;
-    boolean isDeleted;
 }

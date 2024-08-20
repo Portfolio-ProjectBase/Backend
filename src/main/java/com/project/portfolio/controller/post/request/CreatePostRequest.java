@@ -18,7 +18,7 @@ public class CreatePostRequest {
     @NotBlank
     private String detail;
 
-
     boolean isActive;
-    boolean isDeleted;
+    private int skillId;
+
 }

@@ -6,8 +6,6 @@ import com.project.portfolio.controller.post.request.UpdatePostRequest;
 import com.project.portfolio.controller.post.response.PostResponse;
 import com.project.portfolio.repository.post.Post;
 import com.project.portfolio.repository.post.PostRepository;
-import com.project.portfolio.repository.user.User;
-import com.project.portfolio.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
-    private final UserService userService;
 
     @Override
     public void create(CreatePostRequest createPostRequest) {
@@ -37,7 +34,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponse getById(int id) {
-        return postRepository.findById(id).orElseThrow().toResponse();
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Post not found with id: " + id));
+        return post.toResponse();
     }
 
     @Override
@@ -50,7 +49,6 @@ public class PostServiceImpl implements PostService {
                 .title(request.getTitle())
                 .detail(request.getDetail())
                 .isActive(request.isActive())
-                .isDeleted(request.isDeleted())
                 .build();
     }
 
@@ -60,7 +58,6 @@ public class PostServiceImpl implements PostService {
                 .title(request.getTitle())
                 .detail(request.getDetail())
                 .isActive(request.isActive())
-                .isDeleted(request.isDeleted())
                 .build();
   }
 }

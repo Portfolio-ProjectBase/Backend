@@ -17,7 +17,6 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService{
 
     private final CourseRepository repository;
-    private final UserService userService;
 
     public CourseResponse getById(int id) {
         Course course = repository.findById(id)

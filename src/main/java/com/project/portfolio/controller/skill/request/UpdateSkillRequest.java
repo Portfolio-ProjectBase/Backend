@@ -18,10 +18,4 @@ public class UpdateSkillRequest {
     @NotBlank
     private String name;
 
-    @NotBlank
-    private int projectId;
-
-    @NotBlank
-    private int postId;
-
 }

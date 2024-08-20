@@ -16,10 +16,5 @@ public class CreateSkillRequest {
     @NotBlank
     private String name;
 
-    @NotBlank
-    private int projectId;
-
-    @NotBlank
-    private int postId;
 
 }

@@ -3,7 +3,6 @@ package com.project.portfolio.repository.post;
 import com.project.portfolio.controller.post.response.PostResponse;
 import com.project.portfolio.core.Base;
 import com.project.portfolio.repository.skill.Skill;
-import com.project.portfolio.repository.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +11,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,8 +39,9 @@ public class Post extends Base {
                 .id(getId())
                 .title(getTitle())
                 .detail(getDetail())
-                //.isActive(getIsActive())
+                .isActive(isActive())
                 .isDeleted(getIsDeleted())
+                .skills(skills.stream().map(Skill::toResponse).collect(Collectors.toList())) // Convert Skill entities to SkillResponse
                 .build();
     }
 
@@ -51,6 +52,12 @@ public class Post extends Base {
                 .detail(response.getDetail())
                 .isActive(response.isActive())
                 .isDeleted(response.isDeleted())
+                .skills(response.getSkills().stream()
+                   .map(skillResponse -> Skill.builder()
+                          .id(skillResponse.getId())
+                            .name(skillResponse.getName())
+                           .build())
+                   .collect(Collectors.toList()))
                 .build();
 
 
