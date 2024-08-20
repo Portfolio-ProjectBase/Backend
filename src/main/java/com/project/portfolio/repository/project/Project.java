@@ -54,21 +54,5 @@ public class Project extends Base {
                 .build();
     }
 
-    public static Project fromResponse(ProjectResponse response){
-        return Project.builder()
-                .id(response.getId())
-                .title(response.getTitle())
-                .detail(response.getDetail())
-                .projectDate(response.getProjectDate())
-                .liveSiteLink(response.getLiveSiteLink())
-                .githubLink(response.getGithubLink())
-                .skills(response.getSkills().stream()
-                        .map(skillResponse -> Skill.builder()
-                                .id(skillResponse.getId())
-                                .name(skillResponse.getName())
-                                .build())
-                        .collect(Collectors.toList()))
-                .build();
-    }
 }
 

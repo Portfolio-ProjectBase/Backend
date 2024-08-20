@@ -34,12 +34,4 @@ public class SocialMedia extends Base {
                 .build();
     }
 
-    public SocialMedia fromResponse(SocialMediaResponse socialMediaResponse){
-        return SocialMedia.builder()
-                .id(socialMediaResponse.getId())
-                .name(socialMediaResponse.getName())
-                .link(socialMediaResponse.getLink())
-                .build();
-    }
-
 }

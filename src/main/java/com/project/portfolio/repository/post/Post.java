@@ -48,20 +48,5 @@ public class Post extends Base {
                 .build();
     }
 
-    public static Post fromResponse(PostResponse response){
-        return Post.builder()
-                .id(response.getId())
-                .title(response.getTitle())
-                .detail(response.getDetail())
-                .isActive(response.isActive())
-                .isDeleted(response.isDeleted())
-                .skills(response.getSkills().stream()
-                        .map(skillResponse -> Skill.builder()
-                                .id(skillResponse.getId())
-                                .name(skillResponse.getName())
-                                .build())
-                        .collect(Collectors.toList()))
-                .build();
-    }
 }
 

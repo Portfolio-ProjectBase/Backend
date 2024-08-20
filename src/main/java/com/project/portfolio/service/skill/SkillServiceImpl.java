@@ -3,10 +3,6 @@ package com.project.portfolio.service.skill;
 import com.project.portfolio.controller.skill.request.CreateSkillRequest;
 import com.project.portfolio.controller.skill.request.UpdateSkillRequest;
 import com.project.portfolio.controller.skill.response.SkillResponse;
-import com.project.portfolio.repository.post.Post;
-import com.project.portfolio.repository.post.PostRepository;
-import com.project.portfolio.repository.project.Project;
-import com.project.portfolio.repository.project.ProjectRepository;
 import com.project.portfolio.repository.skill.Skill;
 import com.project.portfolio.repository.skill.SkillRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +16,6 @@ import java.util.stream.Collectors;
 public class SkillServiceImpl implements SkillService{
 
     private final SkillRepository skillRepository;
-    private final PostRepository postRepository;
-    private final ProjectRepository projectRepository;
 
     @Override
     public void create(CreateSkillRequest createSkillRequest) {

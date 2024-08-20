@@ -53,16 +53,5 @@ public class User extends Base {
                 .password(getPassword())
                 .build();
     }
-    public static User fromResponse(UserResponse response){
-        return User.builder()
-                .id(response.getId())
-                .name(response.getName())
-                .surname(response.getSurname())
-                .detail(response.getDetail())
-                .emailAddress(response.getEmailAddress())
-                .aboutMe(response.getAboutMe())
-                .password(response.getPassword())
-                .build();
-    }
 
 }
