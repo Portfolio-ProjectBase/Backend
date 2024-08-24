@@ -50,6 +50,7 @@ public class SocialMediaServiceImpl implements SocialMediaService{
         return SocialMedia.builder()
                 .name(createSocialMediaRequest.getName())
                 .link(createSocialMediaRequest.getLink())
+                .image(createSocialMediaRequest.getImage())
                 .build();
     }
 
@@ -58,6 +59,7 @@ public class SocialMediaServiceImpl implements SocialMediaService{
                 .id(updateSocialMediaRequest.getId())
                 .name(updateSocialMediaRequest.getName())
                 .link(updateSocialMediaRequest.getLink())
+                .image(updateSocialMediaRequest.getImage())
                 .build();
     }
 }

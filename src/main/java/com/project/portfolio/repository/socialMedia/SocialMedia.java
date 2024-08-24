@@ -2,6 +2,7 @@ package com.project.portfolio.repository.socialMedia;
 
 import com.project.portfolio.controller.socialMedia.response.SocialMediaResponse;
 import com.project.portfolio.core.Base;
+import com.project.portfolio.core.ImageBase;
 import com.project.portfolio.repository.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
 @Entity
 @Table(name = "Social_Medias")
 @SuperBuilder
-public class SocialMedia extends Base {
+public class SocialMedia extends ImageBase {
     @Column(name = "name")
     private String name;
 
@@ -31,6 +32,7 @@ public class SocialMedia extends Base {
                 .id(getId())
                 .name(getName())
                 .link(getLink())
+                .imageBase64(getImageBase64())
                 .build();
     }
 

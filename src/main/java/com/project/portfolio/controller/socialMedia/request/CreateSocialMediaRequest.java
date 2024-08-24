@@ -15,4 +15,5 @@ public class CreateSocialMediaRequest {
     private String name;
     @NotBlank
     private String link;
+    private byte[] image;
 }

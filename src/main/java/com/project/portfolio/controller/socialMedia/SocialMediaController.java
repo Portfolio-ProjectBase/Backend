@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,18 +22,45 @@ public class SocialMediaController extends BaseController {
 
     private final SocialMediaService service;
 
-    @PostMapping
-    public ResponseEntity<Void> create(@RequestBody @Valid CreateSocialMediaRequest socialMediaRequest){
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<Void> create(@RequestParam String name,
+                                       @RequestParam String link,
+                                       @RequestPart(value = "image", required = false) MultipartFile image) {
 
-        service.create(socialMediaRequest);
+        CreateSocialMediaRequest request = new CreateSocialMediaRequest();
+        request.setName(name);
+        request.setLink(link);
+        if (image != null) {
+            try {
+                request.setImage(image.getBytes());
+            } catch (IOException e) {
+                return answer(HttpStatus.BAD_REQUEST); // Resim yükleme hatası durumunda
+            }
+        }
+        service.create(request);
         return answer(HttpStatus.NO_CONTENT);
 
     }
 
-    @PutMapping
-    public ResponseEntity<Void> update(@RequestBody UpdateSocialMediaRequest socialMediaRequest){
-
-        service.update(socialMediaRequest);
+    @PutMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<Void> update(
+                                        @RequestParam int id,
+                                        @RequestParam String name,
+                                        @RequestParam String link,
+                                        @RequestPart(value = "image", required = false) MultipartFile image) {
+        UpdateSocialMediaRequest request = UpdateSocialMediaRequest.builder()
+                .id(id)
+                .name(name)
+                .link(link)
+                .build();
+        if (image != null) {
+            try {
+                request.setImage(image.getBytes());
+            } catch (IOException e) {
+                return answer(HttpStatus.BAD_REQUEST); // Resim yükleme hatası durumunda
+            }
+        }
+        service.update(request);
         return answer(HttpStatus.NO_CONTENT);
 
     }
