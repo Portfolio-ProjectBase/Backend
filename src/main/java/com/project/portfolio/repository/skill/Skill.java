@@ -1,10 +1,10 @@
 package com.project.portfolio.repository.skill;
 
 import com.project.portfolio.controller.skill.response.SkillResponse;
-import com.project.portfolio.core.Base;
+import com.project.portfolio.core.ImageBase;
+import com.project.portfolio.core.utilities.ImageUtils;
 import com.project.portfolio.repository.post.Post;
 import com.project.portfolio.repository.project.Project;
-import com.project.portfolio.repository.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +21,7 @@ import java.util.List;
 @Entity
 @Table(name = "Skills")
 @SuperBuilder
-public class Skill extends Base {
+public class Skill extends ImageBase {
 
     @Column(name = "name")
     private String name;
@@ -32,17 +32,11 @@ public class Skill extends Base {
     @ManyToMany(mappedBy = "skills")
     private List<Project> projects;
 
-    public SkillResponse toResponse(){
+    public SkillResponse toResponse() {
         return SkillResponse.builder()
                 .id(getId())
                 .name(getName())
-                .build();
-    }
-
-    public Skill fromResponse(SkillResponse skillResponse){
-        return Skill.builder()
-                .id(skillResponse.getId())
-                .name(skillResponse.getName())
+                .imageBase64(getImageBase64()) // getImageBase64 metodunu kullanarak base64 string elde et
                 .build();
     }
 }

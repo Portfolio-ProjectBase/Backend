@@ -1,10 +1,7 @@
 package com.project.portfolio.controller.skill.request;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +13,5 @@ public class UpdateSkillRequest {
     private int id;
 
     private String name;
-
+    private byte[] image; // Resim dosyasını byte olarak almak için
 }

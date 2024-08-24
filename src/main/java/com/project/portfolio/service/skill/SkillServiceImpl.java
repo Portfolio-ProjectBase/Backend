@@ -9,11 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SkillServiceImpl implements SkillService{
+public class SkillServiceImpl implements SkillService {
 
     private final SkillRepository skillRepository;
 
@@ -48,10 +47,9 @@ public class SkillServiceImpl implements SkillService{
     }
 
     public Skill toEntity(CreateSkillRequest createSkillRequest) {
-
-
         return Skill.builder()
                 .name(createSkillRequest.getName())
+                .image(createSkillRequest.getImage()) // Resmi byte[] olarak saklar
                 .build();
     }
 
@@ -59,6 +57,7 @@ public class SkillServiceImpl implements SkillService{
         return Skill.builder()
                 .id(updateSkillRequest.getId())
                 .name(updateSkillRequest.getName())
+                .image(updateSkillRequest.getImage()) // Resmi byte[] olarak günceller
                 .build();
     }
 }
