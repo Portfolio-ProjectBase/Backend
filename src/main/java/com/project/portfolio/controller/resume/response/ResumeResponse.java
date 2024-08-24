@@ -11,7 +11,6 @@ public class ResumeResponse {
 
     private int id;
     private String name;
-    private String fileUrl;
     private String fileType;
 
 }

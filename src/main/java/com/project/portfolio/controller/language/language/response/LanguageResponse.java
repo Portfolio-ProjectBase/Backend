@@ -11,4 +11,5 @@ public class LanguageResponse {
 
     private int id;
     private String name;
+    private String languageLevel;
 }

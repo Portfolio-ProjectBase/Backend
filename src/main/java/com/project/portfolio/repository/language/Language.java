@@ -29,6 +29,7 @@ public class Language extends Base {
         return LanguageResponse.builder()
                 .id(getId())
                 .name(getName())
+                .languageLevel(getLanguageLevel().getName())
                 .build();
     }
 
