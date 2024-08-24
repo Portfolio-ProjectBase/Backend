@@ -2,6 +2,7 @@ package com.project.portfolio.repository.post;
 
 import com.project.portfolio.controller.post.response.PostResponse;
 import com.project.portfolio.core.Base;
+import com.project.portfolio.core.ImageBase;
 import com.project.portfolio.repository.skill.Skill;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @Table(name = "Posts")
 @Entity
 @SuperBuilder
-public class Post extends Base {
+public class Post extends ImageBase {
     @Column(name = "title")
     private String title;
     @Column(name = "detail")
@@ -43,7 +44,7 @@ public class Post extends Base {
                 .title(getTitle())
                 .detail(getDetail())
                 .isActive(isActive())
-                .isDeleted(getIsDeleted())
+                .imageBase64(getImageBase64())
                 .skills(skills.stream().map(Skill::toResponse).collect(Collectors.toList()))
                 .build();
     }

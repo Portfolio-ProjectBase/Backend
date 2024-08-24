@@ -17,6 +17,7 @@ public class CreatePostRequest {
     private String title;
     private String detail;
     private boolean isActive;
+    private byte[] image;
     private List<Integer> skillIds; // Skill id'leri üzerinden ilişki kurulacak
 
 }

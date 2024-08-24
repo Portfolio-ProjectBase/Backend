@@ -2,10 +2,7 @@ package com.project.portfolio.controller.post.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UpdatePostRequest {
     @NotNull
     private int id;
@@ -22,6 +20,7 @@ public class UpdatePostRequest {
 
     @NotBlank
     private String detail;
+    private byte[] image;
 
     boolean isActive;
     private List<Integer> skillIds;

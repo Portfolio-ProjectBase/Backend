@@ -1,7 +1,9 @@
 package com.project.portfolio.controller.post.response;
 
+import com.project.portfolio.controller.ImageBaseResponse;
 import com.project.portfolio.controller.skill.response.SkillResponse;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -9,12 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
-public class PostResponse {
-    private int id;
+@SuperBuilder
+public class PostResponse extends ImageBaseResponse {
     private String title;
     private String detail;
     private boolean isActive;
-    private boolean isDeleted;
     private List<SkillResponse> skills; // SkillResponse objeleriyle ilişkilendirilmiş Skill'ler
 }

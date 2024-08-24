@@ -59,6 +59,7 @@ public class PostServiceImpl implements PostService {
                 .title(request.getTitle())
                 .detail(request.getDetail())
                 .isActive(request.isActive())
+                .image(request.getImage())
                 .skills(skills)
                 .build();
     }
@@ -74,6 +75,7 @@ public class PostServiceImpl implements PostService {
                 .title(request.getTitle())
                 .detail(request.getDetail())
                 .isActive(request.isActive())
+                .image(request.getImage())
                 .skills(skills)
                 .build();
     }
