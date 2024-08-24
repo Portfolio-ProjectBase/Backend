@@ -15,9 +15,6 @@ public class CreateResumeRequest {
     @NotBlank
     private String name;
 
-    @NotBlank
-    private String fileUrl;
-
     private String fileType;
 
 }

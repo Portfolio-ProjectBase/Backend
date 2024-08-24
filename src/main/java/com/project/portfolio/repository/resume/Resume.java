@@ -25,15 +25,15 @@ public class Resume extends Base {
     @Column(name = "file_type")
     private String fileType;
 
-    @Column(name = "file_url", nullable = false)
-    private String fileUrl;
+    @Lob
+    @Column(name = "file_data", nullable = false)
+    private byte[] fileData;
 
 
     public ResumeResponse toResponse(){
         return ResumeResponse.builder()
                 .id(getId())
                 .name(getName())
-                .fileUrl(getFileUrl())
                 .fileType(getFileType())
                 .build();
     }
