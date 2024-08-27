@@ -3,15 +3,20 @@ package com.project.portfolio.service.project;
 import com.project.portfolio.controller.project.request.CreateProjectRequest;
 import com.project.portfolio.controller.project.request.UpdateProjectRequest;
 import com.project.portfolio.controller.project.response.ProjectResponse;
+import com.project.portfolio.core.exception.DataNotFoundException;
+import com.project.portfolio.core.exception.type.NotFoundExceptionType;
 import com.project.portfolio.repository.project.Project;
 import com.project.portfolio.repository.project.ProjectRepository;
 import com.project.portfolio.repository.skill.Skill;
 import com.project.portfolio.repository.skill.SkillRepository;
+import com.project.portfolio.service.skill.SkillRules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.project.portfolio.core.exception.type.NotFoundExceptionType.SKILL_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -57,7 +62,7 @@ public class ProjectServiceImpl implements ProjectService{
     public Project toEntity(CreateProjectRequest createProjectRequest) {
         List<Skill> skills = createProjectRequest.getSkillIds() != null ? createProjectRequest.getSkillIds().stream()
                 .map(skillId -> skillRepository.findById(skillId)
-                        .orElseThrow(() -> new IllegalArgumentException("Skill not found with id: " + skillId)))
+                        .orElseThrow(() ->new DataNotFoundException(SKILL_NOT_FOUND)))
                 .collect(Collectors.toList()) : null;
 
         return Project.builder()
@@ -73,7 +78,7 @@ public class ProjectServiceImpl implements ProjectService{
     public Project toEntity(UpdateProjectRequest updateProjectRequest) {
         List<Skill> skills = updateProjectRequest.getSkillIds() != null ? updateProjectRequest.getSkillIds().stream()
                 .map(skillId -> skillRepository.findById(skillId)
-                        .orElseThrow(() -> new IllegalArgumentException("Skill not found with id: " + skillId)))
+                        .orElseThrow(() -> new DataNotFoundException(SKILL_NOT_FOUND)))
                 .collect(Collectors.toList()) : null;
 
         return Project.builder()

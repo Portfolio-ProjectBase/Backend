@@ -1,5 +1,7 @@
 package com.project.portfolio.controller.certificate.request;
 
+import com.project.portfolio.core.utilities.NoFutureDate;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -17,7 +19,9 @@ public class CreateCertificateRequest {
     private String name;
     @NotBlank
     private String organisationName;
+
     @NotNull
+    @NoFutureDate
     private LocalDate givenDate;
     @NotBlank
     private String certificateSiteLink;

@@ -17,17 +17,18 @@ import java.util.List;
 public class CertificateServiceImpl implements CertificateService{
 
     private final CertificateRepository certificateRepository;
+    private final CertificateRule rule;
 
     @Override
     public void create(CreateCertificateRequest certificateRequest) {
-
+        rule.check(rule.fix(certificateRequest));
         certificateRepository.save(toEntity(certificateRequest));
 
     }
 
     @Override
     public void update(UpdateCertificateRequest certificateRequest) {
-
+        rule.check(rule.fix(certificateRequest));
         certificateRepository.save(toEntity(certificateRequest));
 
     }
@@ -36,6 +37,7 @@ public class CertificateServiceImpl implements CertificateService{
     public List<CertificateResponse> getAll() {
 
         List<Certificate> certificates = certificateRepository.findAll();
+        rule.checkDataList(certificates);
         List<CertificateResponse> responses = certificates.stream().map(Certificate::toResponse).toList();
         return responses;
 
@@ -43,14 +45,14 @@ public class CertificateServiceImpl implements CertificateService{
 
     @Override
     public CertificateResponse getById(int id) {
-
+        rule.checkData(id);
         return certificateRepository.findById(id).orElseThrow().toResponse();
 
     }
 
     @Override
     public void delete(int id) {
-
+        rule.checkData(id);
         certificateRepository.deleteById(id);
 
     }

@@ -1,5 +1,6 @@
 package com.project.portfolio.controller.project.request;
 
+import com.project.portfolio.core.utilities.NoFutureDate;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class UpdateProjectRequest {
     @NotBlank
     private String detail;
     @NotNull
+    @NoFutureDate
     private LocalDate projectDate;
     @NotBlank
     private String liveSiteLink;
