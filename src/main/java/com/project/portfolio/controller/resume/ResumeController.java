@@ -22,22 +22,11 @@ public class ResumeController {
     @RequestMapping(value = "/upload", consumes = {"multipart/form-data"}, method = RequestMethod.POST)
     public String uploadResume(@RequestPart(value = "documents", required = true) MultipartFile file ){
 
-        if (file.isEmpty()) {
-            return "No file uploaded!";
-        }
-
-        if (!file.getContentType().equals("application/pdf")) {
-            return "Please upload a PDF file!";
-        }
-
-        try {
             resumeService.saveResume(file);
-        } catch (Exception e) {
-            return "Error occurred while uploading file: " + e.getMessage();
-        }
+            return "Dosya yükleme başarılı!";
 
-        return "File uploaded successfully!";
     }
+
     @GetMapping("/download")
     public ResponseEntity<Resource> downloadResume() {
         try {

@@ -11,6 +11,7 @@ public enum FileExceptionType {
     POST_FILE_ERROR(4005, "Gönderi dosyası hatası"),
     PROJECT_FILE_ERROR(4006, "Proje dosyası hatası"),
     RESUME_FILE_ERROR(4007, "Özgeçmiş dosyası hatası"),
+    IMAGE_FILE_ERROR(4008, "Resim dosyası hatası"),
     ;
 
     private final Integer errorCode;

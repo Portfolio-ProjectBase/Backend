@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ResumeService {
 
-    void saveResume(MultipartFile file) throws IOException;
+    void saveResume(MultipartFile file);
     byte[] getResume() throws IOException;
 
 }

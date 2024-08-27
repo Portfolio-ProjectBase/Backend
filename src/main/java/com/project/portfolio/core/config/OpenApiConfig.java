@@ -14,12 +14,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                title = "ExtendRent API",
-                description = "API documentation for ExtendRent car rental platform",
+                title = "Portfolio API",
+                description = "API documentation for Portfolio platform",
                 version = "1.0",
                 contact = @Contact(
-                        name = "ExtendRent Team",
-                        url = "https://extendrent.com/"
+                        name = "Portfolio Team",
+                        url = "https://portfolio.com/"
                 ),
                 license = @License(
                         name = "Apache 2.0",
@@ -40,7 +40,7 @@ import org.springframework.context.annotation.Configuration;
 )
 @SecurityScheme(
         name = "bearerAuth",
-        description = "JWT authentication for ExtendRent API",
+        description = "JWT authentication for Portfolio API",
         scheme = "bearer",
         type = SecuritySchemeType.HTTP,
         bearerFormat = "JWT",
