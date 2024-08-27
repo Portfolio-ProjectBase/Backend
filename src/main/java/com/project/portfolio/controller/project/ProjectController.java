@@ -5,6 +5,7 @@ import com.project.portfolio.controller.project.request.CreateProjectRequest;
 import com.project.portfolio.controller.project.request.UpdateProjectRequest;
 import com.project.portfolio.controller.project.response.ProjectResponse;
 import com.project.portfolio.service.project.ProjectService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class ProjectController extends BaseController {
     private final ProjectService projectService;
 
     @PostMapping
-    public ResponseEntity<Void> createProject(@RequestBody CreateProjectRequest request) {
+    public ResponseEntity<Void> createProject(@Valid @RequestBody CreateProjectRequest request) {
         projectService.create(request);
         return answer(HttpStatus.CREATED);
     }

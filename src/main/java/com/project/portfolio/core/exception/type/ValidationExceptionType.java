@@ -20,6 +20,7 @@ public enum ValidationExceptionType {
     PROJECT_VALIDATION_FAILED(3012,"Proje doğrulaması başarısız"),
     REFERENCE_VALIDATION_FAILED(3013,"Referans doğrulaması başarısız"),
     RESUME_VALIDATION_FAILED(3014,"Özgeçmiş doğrulaması başarısız"),
+    DOTCOM_VALIDATION_FAILED(3015,"Site linki '.com' ile bitmelidir."),
     ;
 
     private final Integer errorCode;

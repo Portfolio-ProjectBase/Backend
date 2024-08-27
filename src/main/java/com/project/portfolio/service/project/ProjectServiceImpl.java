@@ -19,15 +19,18 @@ public class ProjectServiceImpl implements ProjectService{
 
     private final ProjectRepository projectRepository;
     private final SkillRepository skillRepository;
+    private final ProjectRules rules;
 
     @Override
     public void create(CreateProjectRequest createProjectRequest) {
+        rules.check(rules.fix(createProjectRequest));
         Project project = toEntity(createProjectRequest);
         projectRepository.save(project);
     }
 
     @Override
     public void update(UpdateProjectRequest updateProjectRequest) {
+        rules.check(rules.fix(updateProjectRequest));
         Project project = toEntity(updateProjectRequest);
         projectRepository.save(project);
     }
@@ -35,18 +38,19 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public List<ProjectResponse> getAll() {
         List<Project> projects = projectRepository.findAll();
+        rules.checkDataList(projects);
         return projects.stream().map(Project::toResponse).toList();
     }
 
     @Override
     public ProjectResponse getById(int id) {
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Project not found with id: " + id));
-        return project.toResponse();
+        rules.checkData(id);
+        return projectRepository.findById(id).orElseThrow().toResponse();
     }
 
     @Override
     public void delete(int id) {
+        rules.checkData(id);
         projectRepository.deleteById(id);
     }
 
