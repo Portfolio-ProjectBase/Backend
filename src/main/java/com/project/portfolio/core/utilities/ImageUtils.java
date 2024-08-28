@@ -1,22 +1,24 @@
 package com.project.portfolio.core.utilities;
 
+import com.project.portfolio.service.ImageRules;
+
 import java.util.Base64;
+import java.util.Arrays;
+
 
 public class ImageUtils {
 
     // Resmin Base64 formatında dönüştürülmesi
     public static String encodeImageToBase64(byte[] image, String mimeType) {
-        if (image == null || image.length == 0) {
-            return null;
-        }
+        ImageRules.validateImage(image); // Hata kontrolü
+        ImageRules.validateMimeType(mimeType); // Hata kontrolü
+
         return "data:" + mimeType + ";base64," + Base64.getEncoder().encodeToString(image);
     }
 
     // Resmin MIME tipini belirlemek için yöntem
     public static String getImageMimeType(byte[] image) {
-        if (image == null || image.length == 0) {
-            return null;
-        }
+        ImageRules.validateImage(image); // Hata kontrolü
 
         // MIME tiplerini belirlemek için kontrol
         if (isPng(image)) {
@@ -51,6 +53,7 @@ public class ImageUtils {
 
     private static boolean isGif(byte[] image) {
         return image.length > 6 &&
-                (new String(image, 0, 6).equals("GIF87a") || new String(image, 0, 6).equals("GIF89a"));
+                (new String(Arrays.copyOfRange(image, 0, 6)).equals("GIF87a") ||
+                        new String(Arrays.copyOfRange(image, 0, 6)).equals("GIF89a"));
     }
 }

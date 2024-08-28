@@ -1,9 +1,6 @@
 package com.project.portfolio.core.exception.response;
 
-import com.project.portfolio.core.exception.type.AlreadyExistsExceptionType;
-import com.project.portfolio.core.exception.type.FileExceptionType;
-import com.project.portfolio.core.exception.type.NotFoundExceptionType;
-import com.project.portfolio.core.exception.type.ValidationExceptionType;
+import com.project.portfolio.core.exception.type.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,6 +36,11 @@ public class ErrorResponse {
 
     public ErrorResponse(FileExceptionType fileExceptionType, List<String> details) {
         this.errorCode = fileExceptionType.getErrorCode();
+        this.details = details;
+    }
+
+    public ErrorResponse(InvalidImageExceptionType invalidImageExceptionType, List<String> details) {
+        this.errorCode = invalidImageExceptionType.getErrorCode();
         this.details = details;
     }
 }

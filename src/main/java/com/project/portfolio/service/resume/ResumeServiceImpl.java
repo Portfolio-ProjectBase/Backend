@@ -22,6 +22,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     public void saveResume(MultipartFile file) {
 
+
         resumeRules.validateResumeFile(file);
 
         try {

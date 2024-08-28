@@ -48,6 +48,12 @@ public class CustomExceptionHandler {
         return new ErrorResponse(e.getValidationExceptionType(), Collections.singletonList(e.getDetail()));
     }
 
+    @ExceptionHandler(InvalidImageException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleInvalidImageException(InvalidImageException e) {
+        return new ErrorResponse(e.getInvalidImageExceptionType(), Collections.singletonList(e.getDetail()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {

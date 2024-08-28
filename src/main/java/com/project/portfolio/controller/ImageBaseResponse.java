@@ -1,6 +1,5 @@
 package com.project.portfolio.controller;
 
-import com.project.portfolio.core.ImageBase;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
