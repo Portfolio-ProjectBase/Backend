@@ -16,5 +16,4 @@ public class PostResponse extends ImageBaseResponse {
     private String title;
     private String detail;
     private boolean isActive;
-    private List<SkillResponse> skills; // SkillResponse objeleriyle ilişkilendirilmiş Skill'ler
 }

@@ -11,9 +11,9 @@ import static com.project.portfolio.core.exception.type.InvalidImageExceptionTyp
 public class ImageRules {
 
     public static void validateImage(byte[] image) {
-        /*if (image == null || image.length == 0) {
+        if (image == null || image.length == 0) {
             throw new InvalidImageException(INVALID_IMAGE_FORMAT);
-        }*/
+        }
         try {
             // Resmin MIME tipini kontrol et
             String mimeType = ImageUtils.getImageMimeType(image);

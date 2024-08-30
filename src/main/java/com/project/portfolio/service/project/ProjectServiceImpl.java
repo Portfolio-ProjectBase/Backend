@@ -5,12 +5,16 @@ import com.project.portfolio.controller.project.request.UpdateProjectRequest;
 import com.project.portfolio.controller.project.response.ProjectResponse;
 import com.project.portfolio.core.exception.DataNotFoundException;
 import com.project.portfolio.core.exception.type.NotFoundExceptionType;
+import com.project.portfolio.repository.post.Post;
 import com.project.portfolio.repository.project.Project;
 import com.project.portfolio.repository.project.ProjectRepository;
 import com.project.portfolio.repository.skill.Skill;
 import com.project.portfolio.repository.skill.SkillRepository;
 import com.project.portfolio.service.skill.SkillRules;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,10 +45,11 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<ProjectResponse> getAll() {
-        List<Project> projects = projectRepository.findAll();
-        rules.checkDataList(projects);
-        return projects.stream().map(Project::toResponse).toList();
+    public List<ProjectResponse> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Project> projectsPage = projectRepository.findAll(pageable);
+        rules.checkDataList(projectsPage.getContent());
+        return projectsPage.stream().map(Project::toResponse).toList();
     }
 
     @Override

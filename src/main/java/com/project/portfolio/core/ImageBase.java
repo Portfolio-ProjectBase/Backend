@@ -22,7 +22,11 @@ public abstract class ImageBase extends Base{
     @Column(name = "image")
     private byte[] image;
 
+
     public String getImageBase64() {
+        if (image == null) {
+            return null; // veya boş bir string dönebilirsiniz: return "";
+        }
         String mimeType = ImageUtils.getImageMimeType(image);
         return ImageUtils.encodeImageToBase64(image, mimeType);
     }

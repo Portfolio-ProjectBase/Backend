@@ -10,7 +10,8 @@ public interface PostService {
 
     void create(CreatePostRequest createPostRequest);
     void update(UpdatePostRequest updatePostRequest);
-    List<PostResponse> getAll();
+    List<PostResponse> getAll(int page, int size);
+
     PostResponse getById(int id);
     void delete(int id);
 

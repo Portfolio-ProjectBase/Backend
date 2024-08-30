@@ -4,8 +4,6 @@ import com.project.portfolio.controller.post.request.CreatePostRequest;
 import com.project.portfolio.controller.post.request.UpdatePostRequest;
 import com.project.portfolio.core.exception.AlreadyExistsException;
 import com.project.portfolio.core.exception.DataNotFoundException;
-import com.project.portfolio.core.exception.InvalidImageException;
-import com.project.portfolio.core.exception.ValidationException;
 import com.project.portfolio.repository.post.PostRepository;
 import com.project.portfolio.service.BaseRules;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.project.portfolio.core.exception.type.AlreadyExistsExceptionType.POST_EXISTS;
-import static com.project.portfolio.core.exception.type.InvalidImageExceptionType.INVALID_IMAGE_FORMAT;
 import static com.project.portfolio.core.exception.type.NotFoundExceptionType.POST_LIST_NOT_FOUND;
 import static com.project.portfolio.core.exception.type.NotFoundExceptionType.POST_NOT_FOUND;
-import static com.project.portfolio.core.exception.type.ValidationExceptionType.IMAGE_VALIDATION_FAILED;
 import static com.project.portfolio.service.ImageRules.validateImage;
 
 @Service

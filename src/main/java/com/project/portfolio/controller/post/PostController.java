@@ -78,9 +78,11 @@ public class PostController extends BaseController {
         return answer(response, HttpStatus.OK);
     }
 
+
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getAll(){
-        List<PostResponse> responses = postService.getAll();
+    public ResponseEntity<List<PostResponse>> getAll(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "10") int size) {
+        List<PostResponse> responses = postService.getAll(page, size);
         return answer(responses, HttpStatus.OK);
     }
 

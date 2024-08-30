@@ -32,8 +32,11 @@ public class ProjectController extends BaseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectResponse>> getAllProjects() {
-        List<ProjectResponse> responses = projectService.getAll();
+    public ResponseEntity<List<ProjectResponse>> getAllProjects(
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "10") int size
+    ) {
+        List<ProjectResponse> responses = projectService.getAll(page,size);
         return answer(responses, HttpStatus.OK);
     }
 

@@ -6,6 +6,9 @@ import com.project.portfolio.controller.post.response.PostResponse;
 import com.project.portfolio.repository.post.Post;
 import com.project.portfolio.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,10 +34,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostResponse> getAll() {
-        List<Post> posts = postRepository.findAll();
-        rules.checkDataList(posts);
-        return posts.stream().map(Post::toResponse).toList();
+    public List<PostResponse> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Post> postsPage = postRepository.findAll(pageable);
+        rules.checkDataList(postsPage.getContent());
+        return postsPage.stream().map(Post::toResponse).toList();
     }
 
     @Override
