@@ -21,6 +21,7 @@ public enum ValidationExceptionType {
     REFERENCE_VALIDATION_FAILED(3013,"Referans doğrulaması başarısız"),
     RESUME_VALIDATION_FAILED(3014,"Özgeçmiş doğrulaması başarısız"),
     DOTCOM_VALIDATION_FAILED(3015,"Site linki '.com' ile bitmelidir."),
+    IMAGE_VALIDATION_FAILED(3016,"Resim boş geçilemez."),
     ;
 
     private final Integer errorCode;

@@ -26,7 +26,9 @@ public class PostController extends BaseController {
     private final PostService postService;
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Void> create(@RequestParam String title,
+    public ResponseEntity<Void> create(
+                                       @Valid
+                                       @RequestParam String title,
                                        @RequestParam String detail,
                                        @RequestParam boolean isActive,
                                        @RequestParam List<Integer> skillIds,

@@ -22,32 +22,6 @@ public class UserController extends BaseController {
 
     private final UserService userService;
 
-    @PostMapping("/uploadResume")
-    public ResponseEntity<String> uploadResume(@RequestParam("file") MultipartFile file) {
-        try {
-            // Dosyayı saklayacağın dizin
-            String uploadDir = "/uploads/resumes/";
-            String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
-            Path filePath = Paths.get(uploadDir + fileName);
-
-            // Dosyayı dizine kaydet
-            Files.createDirectories(filePath.getParent());
-            Files.write(filePath, file.getBytes());
-
-            // URL'yi oluştur
-            String resumeUrl = "/uploads/resumes/" + fileName;
-
-            // URL'yi veri tabanında kaydet
-            // user.setResumeUrl(resumeUrl);
-            // userRepository.save(user);
-
-            return ResponseEntity.ok(resumeUrl);
-
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Dosya yüklenirken bir hata oluştu.");
-        }
-    }
-
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody UpdateUserRequest userRequest){
 

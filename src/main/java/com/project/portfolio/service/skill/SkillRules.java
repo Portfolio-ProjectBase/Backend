@@ -4,6 +4,7 @@ import com.project.portfolio.controller.skill.request.CreateSkillRequest;
 import com.project.portfolio.controller.skill.request.UpdateSkillRequest;
 import com.project.portfolio.core.exception.AlreadyExistsException;
 import com.project.portfolio.core.exception.DataNotFoundException;
+import com.project.portfolio.core.exception.ValidationException;
 import com.project.portfolio.repository.skill.SkillRepository;
 import com.project.portfolio.service.BaseRules;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import java.util.List;
 import static com.project.portfolio.core.exception.type.AlreadyExistsExceptionType.SKILL_EXISTS;
 import static com.project.portfolio.core.exception.type.NotFoundExceptionType.SKILL_LIST_NOT_FOUND;
 import static com.project.portfolio.core.exception.type.NotFoundExceptionType.SKILL_NOT_FOUND;
+import static com.project.portfolio.core.exception.type.ValidationExceptionType.IMAGE_VALIDATION_FAILED;
+import static com.project.portfolio.service.ImageRules.validateImage;
 
 @Service
 @RequiredArgsConstructor
@@ -48,10 +51,22 @@ public class SkillRules implements BaseRules {
 
     public void check(CreateSkillRequest skillRequest){
         isExistsByName(skillRequest.getName());
+        if (skillRequest.getImage() != null) {
+            validateImage(skillRequest.getImage()); // Image validation with optional check
+        }
+        else{
+            throw new ValidationException(IMAGE_VALIDATION_FAILED);
+        }
     }
 
     public void check(UpdateSkillRequest skillRequest){
         isExistsByNameAndIdNot(skillRequest.getName(), skillRequest.getId());
+        if (skillRequest.getImage() != null) {
+            validateImage(skillRequest.getImage()); // Image validation with optional check
+        }
+        else{
+            throw new ValidationException(IMAGE_VALIDATION_FAILED);
+        }
     }
 
     @Override

@@ -18,7 +18,6 @@ public class ImageUtils {
 
     // Resmin MIME tipini belirlemek için yöntem
     public static String getImageMimeType(byte[] image) {
-        ImageRules.validateImage(image); // Hata kontrolü
 
         // MIME tiplerini belirlemek için kontrol
         if (isPng(image)) {
