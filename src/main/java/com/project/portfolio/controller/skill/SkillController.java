@@ -5,6 +5,7 @@ import com.project.portfolio.controller.skill.request.CreateSkillRequest;
 import com.project.portfolio.controller.skill.request.UpdateSkillRequest;
 import com.project.portfolio.controller.skill.response.SkillResponse;
 import com.project.portfolio.service.skill.SkillService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class SkillController extends BaseController {
     private final SkillService skillService;
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Void> create(@RequestParam("name") String name,
+    public ResponseEntity<Void> create(@Valid @RequestParam("name") String name,
                                        @RequestPart(value = "image", required = false) MultipartFile image) {
         CreateSkillRequest skillRequest = new CreateSkillRequest();
         skillRequest.setName(name);
@@ -38,7 +39,7 @@ public class SkillController extends BaseController {
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Void> update(@RequestParam("id") int id,
+    public ResponseEntity<Void> update(@Valid @RequestParam("id") int id,
                                        @RequestParam("name") String name,
                                        @RequestPart(value = "image", required = false) MultipartFile image) {
         UpdateSkillRequest skillRequest = UpdateSkillRequest.builder()

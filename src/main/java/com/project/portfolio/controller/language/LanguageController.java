@@ -5,6 +5,7 @@ import com.project.portfolio.controller.language.language.request.CreateLanguage
 import com.project.portfolio.controller.language.language.request.UpdateLanguageRequest;
 import com.project.portfolio.controller.language.language.response.LanguageResponse;
 import com.project.portfolio.service.language.language.LanguageService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,12 @@ import java.util.List;
 public class LanguageController extends BaseController {
     private final LanguageService service;
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody CreateLanguageRequest request) {
+    public ResponseEntity<Void> create(@RequestBody @Valid CreateLanguageRequest request) {
         service.create(request);
         return answer(HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody UpdateLanguageRequest request){
+    public ResponseEntity<Void> update(@RequestBody @Valid UpdateLanguageRequest request){
         service.update(request);
         return answer(HttpStatus.OK);
     }

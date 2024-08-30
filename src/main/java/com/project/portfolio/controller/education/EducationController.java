@@ -27,7 +27,7 @@ public class EducationController extends BaseController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(UpdateEducationRequest updateEducationRequest){
+    public ResponseEntity<Void> update(@RequestBody @Valid UpdateEducationRequest updateEducationRequest){
         educationService.update(updateEducationRequest);
         return answer(HttpStatus.NO_CONTENT);
     }

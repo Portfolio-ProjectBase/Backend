@@ -30,13 +30,6 @@ public class Post extends ImageBase {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @ManyToMany
-    @JoinTable(
-            name = "post_skill",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id")
-    )
-    private List<Skill> skills;
 
     public PostResponse toResponse(){
         return PostResponse.builder()
@@ -45,7 +38,6 @@ public class Post extends ImageBase {
                 .detail(getDetail())
                 .isActive(isActive())
                 .imageBase64(getImageBase64())
-                .skills(skills.stream().map(Skill::toResponse).collect(Collectors.toList()))
                 .build();
     }
 

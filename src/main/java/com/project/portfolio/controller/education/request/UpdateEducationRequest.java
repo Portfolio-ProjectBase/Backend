@@ -1,5 +1,6 @@
 package com.project.portfolio.controller.education.request;
 
+import com.project.portfolio.core.utilities.NoFutureDate;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class UpdateEducationRequest {
     @NotBlank
     private String name;
     @NotBlank
+    @NoFutureDate
     private Date startDate;
     @NotBlank
     private Date finishDate;

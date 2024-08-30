@@ -23,5 +23,4 @@ public class UpdatePostRequest {
     private byte[] image;
 
     boolean isActive;
-    private List<Integer> skillIds;
 }

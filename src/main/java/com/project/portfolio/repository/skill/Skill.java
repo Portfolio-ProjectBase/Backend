@@ -27,9 +27,6 @@ public class Skill extends ImageBase {
     private String name;
 
     @ManyToMany(mappedBy = "skills")
-    private List<Post> posts;
-
-    @ManyToMany(mappedBy = "skills")
     private List<Project> projects;
 
     public SkillResponse toResponse() {

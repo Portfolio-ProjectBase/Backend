@@ -27,7 +27,7 @@ public class ReferenceController extends BaseController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(UpdateReferenceRequest updateReferenceRequest){
+    public ResponseEntity<Void> update(@RequestBody @Valid UpdateReferenceRequest updateReferenceRequest){
         referenceService.update(updateReferenceRequest);
         return answer(HttpStatus.NO_CONTENT);
     }

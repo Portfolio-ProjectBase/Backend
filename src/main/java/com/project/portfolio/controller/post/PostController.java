@@ -31,13 +31,11 @@ public class PostController extends BaseController {
                                        @RequestParam String title,
                                        @RequestParam String detail,
                                        @RequestParam boolean isActive,
-                                       @RequestParam List<Integer> skillIds,
                                        @RequestPart(value = "image", required = false) MultipartFile image){
         CreatePostRequest request = new CreatePostRequest();
         request.setTitle(title);
         request.setDetail(detail);
         request.setActive(isActive);
-        request.setSkillIds(skillIds);
         if (image != null) {
             try {
                 request.setImage(image.getBytes());
@@ -50,11 +48,11 @@ public class PostController extends BaseController {
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Void> update(@RequestParam("id") int id,
+    public ResponseEntity<Void> update(@Valid
+                                       @RequestParam("id") int id,
                                        @RequestParam String title,
                                        @RequestParam String detail,
                                        @RequestParam boolean isActive,
-                                       @RequestParam List<Integer> skillIds,
                                        @RequestPart(value = "image", required = false) MultipartFile image){
 
         UpdatePostRequest request = UpdatePostRequest.builder()
@@ -62,7 +60,6 @@ public class PostController extends BaseController {
                 .title(title)
                 .detail(detail)
                 .isActive(isActive)
-                .skillIds(skillIds)
                 .build();
         if (image != null) {
             try {

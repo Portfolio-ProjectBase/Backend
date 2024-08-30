@@ -3,6 +3,7 @@ package com.project.portfolio.controller.user;
 import com.project.portfolio.controller.BaseController;
 import com.project.portfolio.controller.user.request.UpdateUserRequest;
 import com.project.portfolio.service.user.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class UserController extends BaseController {
     private final UserService userService;
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody UpdateUserRequest userRequest){
+    public ResponseEntity<Void> update(@RequestBody @Valid UpdateUserRequest userRequest){
 
         userService.update(userRequest);
         return answer(HttpStatus.NO_CONTENT);

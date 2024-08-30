@@ -1,5 +1,6 @@
 package com.project.portfolio.controller.user.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class UpdateUserRequest {
     @NotBlank
     private String surname;
     @NotBlank
+    @Email
     private String emailAddress;
     @NotBlank
     private String password;

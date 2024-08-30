@@ -1,5 +1,7 @@
 package com.project.portfolio.controller.post.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreatePostRequest {
+    @NotBlank
     private String title;
+    @NotBlank
     private String detail;
     private boolean isActive;
     private byte[] image;
-    private List<Integer> skillIds; // Skill id'leri üzerinden ilişki kurulacak
 
 }

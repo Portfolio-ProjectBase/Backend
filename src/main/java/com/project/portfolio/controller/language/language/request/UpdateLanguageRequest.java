@@ -19,6 +19,6 @@ public class UpdateLanguageRequest {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     private int levelId;
 }

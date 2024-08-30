@@ -1,6 +1,7 @@
 package com.project.portfolio.controller.language.language.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,6 @@ public class CreateLanguageRequest {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     private int levelId;
 }

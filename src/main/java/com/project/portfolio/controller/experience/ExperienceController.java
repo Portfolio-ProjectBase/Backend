@@ -27,7 +27,7 @@ public class ExperienceController extends BaseController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(UpdateExperienceRequest updateExperienceRequest){
+    public ResponseEntity<Void> update(@RequestBody @Valid UpdateExperienceRequest updateExperienceRequest){
         experienceService.update(updateExperienceRequest);
         return answer(HttpStatus.NO_CONTENT);
     }
