@@ -8,6 +8,7 @@ CREATE TABLE users (
     name VARCHAR(255),
     surname VARCHAR(255),
     email_address VARCHAR(255),
+    username VARCHAR(255),
     password VARCHAR(255),
     about_me VARCHAR(255),
     detail VARCHAR(255)

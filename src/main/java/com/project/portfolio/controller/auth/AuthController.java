@@ -42,7 +42,10 @@ public class AuthController {
         String randomSecretPass = UUID.randomUUID().toString().replace("-", "").substring(0, 8); // 8 karakterlik şifre
 
         // Kullanıcıyı bul ve şifresini güncelle
-        User user = userRepository.findByUsername("dnz");
+        //User user = userRepository.findByUsername("dnz");
+        User user = userRepository.findAll().stream().findFirst()
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         user.setPassword(passwordEncoder.encode(randomSecretPass)); // Şifreyi encode ediyoruz
         user.setPasswordCreatedAt(LocalDateTime.now());
         userRepository.save(user); // Güncellenmiş User'ı kaydediyoruz

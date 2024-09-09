@@ -23,6 +23,9 @@ target/
 src/main/resources/application.yml
 application.properties
 
+src/main/resources/data.sql
+src/main/resources/schema.sql
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

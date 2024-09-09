@@ -2,8 +2,8 @@
 WITH user_count AS (
     SELECT COUNT(*) AS count FROM users
 )
-INSERT INTO users (created_date, is_deleted, name, surname, email_address, password, about_me, detail)
-SELECT current_timestamp, 0, 'gokhan', 'asilturk', 'gokhanasilturkk@gmail.com', '1234', 'mememe', 'meeeee'
+INSERT INTO users (created_date, is_deleted, name, surname,username, email_address, password, about_me, detail)
+SELECT current_timestamp, 0, 'deniz', 'kırıtoğlu','dnz', 'deniz@gmail.com', '1234', 'mememe', 'meeeee'
 WHERE (SELECT count FROM user_count) = 0;
 
 
