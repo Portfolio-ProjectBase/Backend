@@ -20,6 +20,8 @@ public class UpdateUserRequest {
     @NotBlank
     private String surname;
     @NotBlank
+    private String username;
+    @NotBlank
     @Email
     private String emailAddress;
     @NotBlank

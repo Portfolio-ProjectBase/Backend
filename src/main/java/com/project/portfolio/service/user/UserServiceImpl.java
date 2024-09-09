@@ -6,11 +6,15 @@ import com.project.portfolio.controller.user.response.UserResponse;
 import com.project.portfolio.repository.user.User;
 import com.project.portfolio.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Primary
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
     private final UserRepository repository;
@@ -39,6 +43,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserResponse getByUsername(String username) {
+        UserResponse users= repository.findByUsername(username).toResponse();
+        return users;
+    }
+
+    @Override
     public void delete(int id) {
         repository.deleteById(id);
     }
@@ -47,6 +57,7 @@ public class UserServiceImpl implements UserService{
         return User.builder()
                 .name(request.getName())
                 .surname(request.getSurname())
+                .username(request.getUsername())
                 .aboutMe(request.getAboutMe())
                 .password(request.getPassword())
                 .emailAddress(request.getEmailAddress())
@@ -58,10 +69,21 @@ public class UserServiceImpl implements UserService{
                 .id(request.getId())
                 .name(request.getName())
                 .surname(request.getSurname())
+                .username(request.getUsername())
                 .aboutMe(request.getAboutMe())
                 .password(request.getPassword())
                 .emailAddress(request.getEmailAddress())
                 .detail(request.getDetail())
+                .build();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = repository.findByUsername(username);
+
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUsername())
+                .password(user.getPassword())
                 .build();
     }
 }

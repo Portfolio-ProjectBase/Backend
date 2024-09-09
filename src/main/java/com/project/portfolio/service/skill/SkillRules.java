@@ -73,7 +73,6 @@ public class SkillRules implements BaseRules {
     public String fixName(String name) {
         return name;
     }
-
     @Override
     public void isExistsByName(String name) {
         if(skillRepository.existsByName(name)){
