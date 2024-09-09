@@ -19,7 +19,8 @@ target/
 *.iml
 *.ipr
 
-#Ignore application.properties file
+#Ignore application.yml file
+src/main/resources/application.yml
 application.properties
 
 ### NetBeans ###
