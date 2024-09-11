@@ -26,7 +26,17 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void update(UpdateUserRequest updateUserRequest) {
-        repository.save(toEntity(updateUserRequest));
+        repository.updateUser(
+                updateUserRequest.getId(),
+                updateUserRequest.getName(),
+                updateUserRequest.getSurname(),
+                updateUserRequest.getUsername(),
+                updateUserRequest.getAboutMe(),
+                updateUserRequest.getPassword(),
+                updateUserRequest.getEmailAddress(),
+                updateUserRequest.getPasswordCreatedAt(),
+                updateUserRequest.getDetail()
+        );
     }
 
     @Override
@@ -44,7 +54,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserResponse getByUsername(String username) {
-        UserResponse users= repository.findByUsername(username).toResponse();
+        UserResponse users= repository.findByUsername(username).orElseThrow().toResponse();
         return users;
     }
 
@@ -79,7 +89,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findByUsername(username);
+        User user = repository.findByUsername(username).orElseThrow();
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())

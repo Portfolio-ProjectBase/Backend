@@ -7,11 +7,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@SuperBuilder
 public class UpdateUserRequest {
     @NotNull
     private int id;
@@ -30,4 +34,5 @@ public class UpdateUserRequest {
     private String aboutMe;
     @NotBlank
     private String detail;
+    private LocalDateTime passwordCreatedAt;
 }

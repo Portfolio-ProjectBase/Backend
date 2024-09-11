@@ -1,53 +1,65 @@
 package com.project.portfolio.service.password;
 
-import com.project.portfolio.controller.user.request.CreateUserRequest;
-import com.project.portfolio.controller.user.response.UserResponse;
-import com.project.portfolio.service.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.project.portfolio.repository.user.User;
+import com.project.portfolio.repository.user.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Service
+@Component
+@RequiredArgsConstructor
 public class SecretPasswordService {
 
-    @Autowired
-    private UserService userService;
+    private final UserRepository repository;
+    private static final Logger logger = LoggerFactory.getLogger(SecretPasswordService.class);
+    private int sayac = 1;
 
-    // 1 dakikada bir şifrelerin süresini kontrol eden görev
     @Scheduled(fixedRate = 60000) // 60 saniyede bir çalışır
     public void deleteExpiredPasswords() {
-        List<UserResponse> users = userService.getAll();
-        for (UserResponse user : users) {
-            if (user.getPasswordCreatedAt() != null && isPasswordExpired(user.getPasswordCreatedAt())) {
-                // Şifreyi ve oluşturulma zamanını sıfırlıyoruz
-                user.setPassword(null);
-                user.setPasswordCreatedAt(null);
+        //logger.info("Planlanmış görev " + sayac + " kez çağırıldı");
+        //sayac++;
 
-                // UserResponse'tan CreateUserRequest'e dönüştürme
-                CreateUserRequest createUserRequest = convertToCreateUserRequest(user);
-                userService.create(createUserRequest); // Kaydediyoruz
+        // Tüm kullanıcıların bilgilerini alıyoruz
+        List<User> users = repository.findAll();
+
+        for (User user : users) {
+            if (user.getPasswordCreatedAt() != null) {
+                boolean isExpired = isPasswordExpired(user.getPasswordCreatedAt());
+                logger.info("Kullanıcı: " + user.getUsername() + ", şifre süresi dolmuş mu? " + isExpired);
+
+                if (isExpired && user.getPassword() != null) {
+                    // Şifre süresi dolmuşsa, şifreyi sıfırlıyoruz
+                    resetUserPassword(user);
+                }
             }
         }
     }
 
-    // Şifre süresi dolmuş mu? (örneğin 1 saat)
+    // Şifre süresi dolmuş mu? (10 dk)
     private boolean isPasswordExpired(LocalDateTime passwordCreatedAt) {
         return passwordCreatedAt.plusHours(1).isBefore(LocalDateTime.now());
     }
 
-    // UserResponse'tan CreateUserRequest'e dönüştürme işlemi
-    private CreateUserRequest convertToCreateUserRequest(UserResponse userResponse) {
-        return CreateUserRequest.builder()
-                .name(userResponse.getName())
-                .surname(userResponse.getSurname())
-                .emailAddress(userResponse.getEmailAddress())
-                .password(userResponse.getPassword())
-                .aboutMe(userResponse.getAboutMe())
-                .detail(userResponse.getDetail())
-                .username(userResponse.getUsername())
-                .build();
+    // Kullanıcının şifresini sıfırlama işlemi
+    private void resetUserPassword(User user) {
+        logger.info("Şifre sıfırlanıyor: " + user.getUsername());
+
+        // Şifre ve şifre oluşturulma tarihini sıfırlıyoruz
+        repository.updateUser(
+                user.getId(),
+                user.getName(),
+                user.getSurname(),
+                user.getUsername(),
+                user.getAboutMe(),
+                null, // Şifreyi sıfırlıyoruz
+                user.getEmailAddress(),
+                null,
+                user.getDetail()
+        );
     }
 }
