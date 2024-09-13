@@ -19,9 +19,14 @@ target/
 *.iml
 *.ipr
 
-#Ignore application.yml file
+#Ignore properties file
 src/main/resources/application.yml
 application.properties
+application.yml
+
+#Ignore sql files
+src/main/resources/data.sql
+src/main/resources/schema.sql
 
 ### NetBeans ###
 /nbproject/private/
