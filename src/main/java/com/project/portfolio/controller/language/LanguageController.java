@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/language")
+@RequestMapping("api/v1/language")
 public class LanguageController extends BaseController {
     private final LanguageService service;
     @PostMapping

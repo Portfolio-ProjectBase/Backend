@@ -13,7 +13,7 @@ import org.springframework.core.io.Resource;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/resumes")
+@RequestMapping("api/v1/resumes")
 @RequiredArgsConstructor
 public class ResumeController {
 
