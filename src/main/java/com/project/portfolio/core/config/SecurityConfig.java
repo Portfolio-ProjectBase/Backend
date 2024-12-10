@@ -53,6 +53,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/projects/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/language/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/resumes/download/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/generate-token").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                         .anyRequest().authenticated()

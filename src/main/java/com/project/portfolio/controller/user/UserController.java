@@ -2,6 +2,7 @@ package com.project.portfolio.controller.user;
 
 import com.project.portfolio.controller.BaseController;
 import com.project.portfolio.controller.user.request.UpdateUserRequest;
+import com.project.portfolio.controller.user.response.UserResponse;
 import com.project.portfolio.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,5 +31,11 @@ public class UserController extends BaseController {
         userService.update(userRequest);
         return answer(HttpStatus.NO_CONTENT);
 
+    }
+
+    @GetMapping
+    public ResponseEntity<UserResponse> getById(){
+        UserResponse user = userService.getById(1);
+        return answer(user, HttpStatus.OK);
     }
 }
