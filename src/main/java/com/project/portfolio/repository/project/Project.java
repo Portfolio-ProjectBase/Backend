@@ -2,6 +2,7 @@ package com.project.portfolio.repository.project;
 
 import com.project.portfolio.controller.project.response.ProjectResponse;
 import com.project.portfolio.core.Base;
+import com.project.portfolio.core.ImageBase;
 import com.project.portfolio.repository.skill.Skill;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "Projects")
 @SuperBuilder
-public class Project extends Base {
+public class Project extends ImageBase {
     @Column(name = "title")
     private String title;
     @Column(name = "detail")
@@ -50,7 +51,8 @@ public class Project extends Base {
                 .projectDate(getProjectDate())
                 .liveSiteLink(getLiveSiteLink())
                 .githubLink(getGithubLink())
-                .skills(skills.stream().map(Skill::toResponse).collect(Collectors.toList()))
+                .imageBase64(getImageBase64())
+                .skillName(skills.stream().map(Skill::getName).collect(Collectors.toList()))
                 .build();
     }
 

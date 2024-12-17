@@ -27,6 +27,7 @@ public class UpdateProjectRequest {
     private LocalDate projectDate;
     @NotBlank
     private String liveSiteLink;
+    private byte[] image;
     @NotBlank
     private String githubLink;
     private List<Integer> skillIds;

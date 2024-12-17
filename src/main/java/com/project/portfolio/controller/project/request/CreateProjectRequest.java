@@ -23,5 +23,6 @@ public class CreateProjectRequest {
     private LocalDate projectDate;
     private String liveSiteLink;
     private String githubLink;
+    private byte[] image;
     private List<Integer> skillIds; // Skill id'leri üzerinden ilişki kurulacak
 }

@@ -2,6 +2,7 @@ package com.project.portfolio.service.project;
 
 import com.project.portfolio.controller.project.request.CreateProjectRequest;
 import com.project.portfolio.controller.project.request.UpdateProjectRequest;
+import com.project.portfolio.controller.project.response.PagedResponse;
 import com.project.portfolio.controller.project.response.ProjectResponse;
 import com.project.portfolio.core.exception.DataNotFoundException;
 import com.project.portfolio.core.exception.type.NotFoundExceptionType;
@@ -45,12 +46,28 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<ProjectResponse> getAll(int page, int size) {
+    public PagedResponse<ProjectResponse> getAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Project> projectsPage = projectRepository.findAll(pageable);
-        rules.checkDataList(projectsPage.getContent());
-        return projectsPage.stream().map(Project::toResponse).toList();
+
+        // Listeyi dönüştür
+        List<ProjectResponse> projectResponses = projectsPage
+                .getContent()
+                .stream()
+                .map(Project::toResponse)
+                .toList();
+
+        // Sayfalama bilgilerini ekle
+        return new PagedResponse<>(
+                projectResponses,
+                projectsPage.getNumber(),       // Mevcut sayfa numarası
+                projectsPage.getSize(),         // Sayfa boyutu
+                projectsPage.getTotalPages(),   // Toplam sayfa sayısı
+                projectsPage.getTotalElements(),// Toplam eleman sayısı
+                projectsPage.isLast()           // Son sayfa kontrolü
+        );
     }
+
 
     @Override
     public ProjectResponse getById(int id) {
@@ -76,6 +93,7 @@ public class ProjectServiceImpl implements ProjectService{
                 .projectDate(createProjectRequest.getProjectDate())
                 .liveSiteLink(createProjectRequest.getLiveSiteLink())
                 .githubLink(createProjectRequest.getGithubLink())
+                .image(createProjectRequest.getImage())
                 .skills(skills)
                 .build();
     }
@@ -93,6 +111,7 @@ public class ProjectServiceImpl implements ProjectService{
                 .projectDate(updateProjectRequest.getProjectDate())
                 .liveSiteLink(updateProjectRequest.getLiveSiteLink())
                 .githubLink(updateProjectRequest.getGithubLink())
+                .image(updateProjectRequest.getImage())
                 .skills(skills)
                 .build();
     }

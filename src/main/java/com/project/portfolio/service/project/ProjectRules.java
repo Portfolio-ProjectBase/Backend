@@ -17,6 +17,8 @@ import static com.project.portfolio.core.exception.type.AlreadyExistsExceptionTy
 import static com.project.portfolio.core.exception.type.NotFoundExceptionType.PROJECT_LIST_NOT_FOUND;
 import static com.project.portfolio.core.exception.type.NotFoundExceptionType.PROJECT_NOT_FOUND;
 import static com.project.portfolio.core.exception.type.ValidationExceptionType.DOTCOM_VALIDATION_FAILED;
+import static com.project.portfolio.core.exception.type.ValidationExceptionType.IMAGE_VALIDATION_FAILED;
+import static com.project.portfolio.service.ImageRules.validateImage;
 
 @Service
 @RequiredArgsConstructor
@@ -34,10 +36,23 @@ public class ProjectRules implements BaseRules {
     public void check(CreateProjectRequest request){
         isExistsByName(request.getTitle());
         validateEndsWithCom(request.getLiveSiteLink());
+        if (request.getImage() != null) {
+            validateImage(request.getImage()); // Image validation with optional check
+        }
+        else {
+            throw new ValidationException(IMAGE_VALIDATION_FAILED);
+        }
+
     }
     public void check(UpdateProjectRequest request){
         isExistsByNameAndIdNot(request.getTitle(),request.getId());
         validateEndsWithCom(request.getLiveSiteLink());
+        if (request.getImage() != null) {
+            validateImage(request.getImage()); // Image validation with optional check
+        }
+        else{
+            throw new ValidationException(IMAGE_VALIDATION_FAILED);
+        }
     }
     @Override
     public void checkDataList(List<?> list) {
