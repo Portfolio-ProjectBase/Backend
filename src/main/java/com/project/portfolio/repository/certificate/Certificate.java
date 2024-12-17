@@ -1,8 +1,7 @@
 package com.project.portfolio.repository.certificate;
 
 import com.project.portfolio.controller.certificate.response.CertificateResponse;
-import com.project.portfolio.core.Base;
-import com.project.portfolio.repository.user.User;
+import com.project.portfolio.core.ImageBase;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,7 @@ import java.time.LocalDate;
 @Entity
 @SuperBuilder
 @Table(name = "Certificates")
-public class Certificate extends Base {
+public class Certificate extends ImageBase {
     @Column(name = "name")
     private String name;
     @Column(name = "organisation_name")
@@ -40,6 +39,7 @@ public class Certificate extends Base {
                 .certificateSiteLink(getCertificateSiteLink())
                 .organisationName(getOrganisationName())
                 .serialNumber(getSerialNumber())
+                .imageBase64(getImageBase64())
                 .build();
     }
 

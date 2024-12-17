@@ -5,7 +5,6 @@ import com.project.portfolio.controller.experience.request.UpdateExperienceReque
 import com.project.portfolio.controller.experience.response.ExperienceResponse;
 import com.project.portfolio.repository.experience.Experience;
 import com.project.portfolio.repository.experience.ExperienceRepository;
-import com.project.portfolio.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExperienceServiceImpl implements ExperienceService{
     private final ExperienceRepository repository;
-    private final UserService userService;
 
     @Override
     public void create(CreateExperienceRequest createExperienceRequest) {

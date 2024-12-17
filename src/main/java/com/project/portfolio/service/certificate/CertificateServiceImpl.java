@@ -64,6 +64,7 @@ public class CertificateServiceImpl implements CertificateService{
                 .givenDate(certificateRequest.getGivenDate())
                 .organisationName(certificateRequest.getOrganisationName())
                 .serialNumber(certificateRequest.getSerialNumber())
+                .image(certificateRequest.getImage())
                 .build();
     }
 
@@ -75,6 +76,7 @@ public class CertificateServiceImpl implements CertificateService{
                 .givenDate(certificateRequest.getGivenDate())
                 .organisationName(certificateRequest.getOrganisationName())
                 .serialNumber(certificateRequest.getSerialNumber())
+                .image(certificateRequest.getImage())
                 .build();
     }
 

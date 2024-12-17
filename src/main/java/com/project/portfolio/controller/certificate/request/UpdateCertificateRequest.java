@@ -4,10 +4,7 @@ import com.project.portfolio.core.utilities.NoFutureDate;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -15,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class UpdateCertificateRequest {
     @NotNull
     private int id;
@@ -28,4 +26,5 @@ public class UpdateCertificateRequest {
     @NotBlank
     private String certificateSiteLink;
     private String serialNumber;
+    private byte[] image;
 }

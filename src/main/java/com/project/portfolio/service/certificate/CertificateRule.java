@@ -4,6 +4,7 @@ import com.project.portfolio.controller.certificate.request.CreateCertificateReq
 import com.project.portfolio.controller.certificate.request.UpdateCertificateRequest;
 import com.project.portfolio.core.exception.AlreadyExistsException;
 import com.project.portfolio.core.exception.DataNotFoundException;
+import com.project.portfolio.core.exception.ValidationException;
 import com.project.portfolio.repository.certificate.CertificateRepository;
 import com.project.portfolio.service.BaseRules;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import java.util.List;
 
 import static com.project.portfolio.core.exception.type.AlreadyExistsExceptionType.CERTIFICATE_EXISTS;
 import static com.project.portfolio.core.exception.type.NotFoundExceptionType.*;
+import static com.project.portfolio.core.exception.type.ValidationExceptionType.IMAGE_VALIDATION_FAILED;
+import static com.project.portfolio.service.ImageRules.validateImage;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +33,22 @@ public class CertificateRule implements BaseRules {
 
     public void check(CreateCertificateRequest request){
         isExistsByName(request.getName());
+        if (request.getImage() != null) {
+            validateImage(request.getImage()); // Image validation with optional check
+        }
+        else{
+            throw new ValidationException(IMAGE_VALIDATION_FAILED);
+        }
     }
 
     public void check(UpdateCertificateRequest request){
         isExistsByNameAndIdNot(request.getName(), request.getId());
+        if (request.getImage() != null) {
+            validateImage(request.getImage()); // Image validation with optional check
+        }
+        else{
+            throw new ValidationException(IMAGE_VALIDATION_FAILED);
+        }
     }
     @Override
     public void checkDataList(List<?> list) {

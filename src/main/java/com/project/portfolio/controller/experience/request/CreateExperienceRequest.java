@@ -30,6 +30,6 @@ public class CreateExperienceRequest {
     @NoFutureDate
     private LocalDate startDate;
 
-    @NotNull
+
     private LocalDate finishDate;
 }
