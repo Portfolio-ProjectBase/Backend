@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,11 +19,11 @@ public class UpdateEducationRequest {
     private int id;
     @NotBlank
     private String name;
-    @NotBlank
+    @NotNull
     @NoFutureDate
-    private Date startDate;
-    @NotBlank
-    private Date finishDate;
+    private LocalDate startDate;
+    @NotNull
+    private LocalDate finishDate;
     @NotBlank
     private String major;
 }

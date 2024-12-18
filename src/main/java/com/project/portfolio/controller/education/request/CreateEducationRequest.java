@@ -2,11 +2,13 @@ package com.project.portfolio.controller.education.request;
 
 import com.project.portfolio.core.utilities.NoFutureDate;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,11 +17,11 @@ import java.util.Date;
 public class CreateEducationRequest {
     @NotBlank
     private String name;
-    @NotBlank
+    @NotNull
     @NoFutureDate
-    private Date startDate;
-    @NotBlank
-    private Date finishDate;
+    private LocalDate startDate;
+    @NotNull
+    private LocalDate finishDate;
     @NotBlank
     private String major;
 

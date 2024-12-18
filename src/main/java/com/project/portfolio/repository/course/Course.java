@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -27,7 +28,7 @@ public class Course extends Base {
     private String name;
     private String instructor;
     private String detail;
-    private Date date;
+    private LocalDate date;
 
 
     public CourseResponse toResponse() {

@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -22,9 +23,9 @@ public class Education extends Base {
     @Column(name = "name")
     private String name;
     @Column(name = "startDate")
-    private Date startDate;
+    private LocalDate startDate;
     @Column(name = "finishDate")
-    private Date finishDate;
+    private LocalDate finishDate;
     @Column(name = "major")
     private String major;
 

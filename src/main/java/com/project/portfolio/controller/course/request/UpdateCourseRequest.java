@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class UpdateCourseRequest {
     private String instructor;
     @Size(min = 2, max = 500, message = "Mesaj için en az 2, en fazla 500 karakter giriniz.")
     private String detail;
-    @NotBlank
-    private Date date;
+    @NotNull
+    private LocalDate date;
 
 }
