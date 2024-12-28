@@ -1,10 +1,10 @@
 package com.project.portfolio.core.exception;
-
 import com.project.portfolio.core.exception.response.ErrorResponse;
 import com.project.portfolio.core.exception.type.NotFoundExceptionType;
 import com.project.portfolio.core.exception.type.ValidationExceptionType;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,43 +17,49 @@ import java.util.List;
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
+    // Genel Exception
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleException(Exception e) {
         return new ErrorResponse(NotFoundExceptionType.GENERIC_EXCEPTION, Collections.singletonList(e.getMessage()));
     }
 
+    // DataNotFoundException
     @ExceptionHandler(DataNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleDataNotFoundException(DataNotFoundException e) {
         return new ErrorResponse(e.getNotFoundExceptionType(), Collections.singletonList(e.getDetail()));
     }
 
+    // FileException
     @ExceptionHandler(FileException.class)
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ErrorResponse handleFileException(FileException e) {
         return new ErrorResponse(e.getFileExceptionType(), Collections.singletonList(e.getDetail()));
     }
 
+    // AlreadyExistsException
     @ExceptionHandler(AlreadyExistsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleAlreadyExistsException(AlreadyExistsException e) {
         return new ErrorResponse(e.getAlreadyExistsExceptionType(), Collections.singletonList(e.getDetail()));
     }
 
-
+    // ValidationException
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleValidationException(ValidationException e) {
         return new ErrorResponse(e.getValidationExceptionType(), Collections.singletonList(e.getDetail()));
     }
 
+    // InvalidImageException
     @ExceptionHandler(InvalidImageException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleInvalidImageException(InvalidImageException e) {
         return new ErrorResponse(e.getInvalidImageExceptionType(), Collections.singletonList(e.getDetail()));
     }
 
+    // Validation için MethodArgumentNotValidException
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
@@ -73,5 +79,24 @@ public class CustomExceptionHandler {
         errorResponse.setDetails(validationErrors);
 
         return errorResponse;
+    }
+
+    // HttpMediaTypeNotSupportedException
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+    public ErrorResponse handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex) {
+        // Desteklenmeyen Content-Type ve desteklenen Media Type'leri loglayın
+        String unsupportedType = ex.getContentType() != null ? ex.getContentType().toString() : "unknown";
+        List<String> supportedTypes = ex.getSupportedMediaTypes() != null
+                ? ex.getSupportedMediaTypes().stream().map(Object::toString).toList()
+                : Collections.emptyList();
+
+        String detailMessage = "Unsupported Content-Type: " + unsupportedType +
+                ". Supported types: " + supportedTypes;
+
+        return new ErrorResponse(
+                NotFoundExceptionType.GENERIC_EXCEPTION,
+                Collections.singletonList(detailMessage)
+        );
     }
 }

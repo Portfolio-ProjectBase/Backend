@@ -1,5 +1,6 @@
 package com.project.portfolio.controller.post.request;
 
+import com.project.portfolio.controller.postContent.response.PostContentResponse;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -17,10 +18,6 @@ public class UpdatePostRequest {
 
     @NotBlank
     private String title;
-
-    @NotBlank
-    private String detail;
-    private byte[] image;
 
     boolean isActive;
 }

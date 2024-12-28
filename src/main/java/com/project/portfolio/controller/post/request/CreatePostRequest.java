@@ -1,11 +1,10 @@
 package com.project.portfolio.controller.post.request;
 
+import com.project.portfolio.controller.postContent.request.CreatePostContentRequest;
+import com.project.portfolio.controller.postContent.response.PostContentResponse;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -13,12 +12,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class CreatePostRequest {
-    @NotBlank
     private String title;
-    @NotBlank
-    private String detail;
     private boolean isActive;
-    private byte[] image;
-
+    private List<CreatePostContentRequest> elements;
 }

@@ -1,0 +1,32 @@
+package com.project.portfolio.core.filter;
+
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
+@Component
+public class ContentTypeFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+        // Sadece belirli path'lerde kontrol et
+        String requestURI = httpRequest.getRequestURI();
+        if (requestURI.startsWith("/api/v1/posts")) {
+            String contentType = httpRequest.getContentType();
+            if (contentType != null && contentType.contains("application/octet-stream")) {
+                throw new ServletException("Unsupported Content-Type: application/octet-stream");
+            }
+        }
+
+        chain.doFilter(request, response);
+    }
+}

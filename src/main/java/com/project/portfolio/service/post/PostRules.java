@@ -35,16 +35,12 @@ public class PostRules implements BaseRules {
     public void check(CreatePostRequest request){
         isExistsByName(request.getTitle());
 
-        if (request.getImage() != null) {
-            validateImage(request.getImage());
-        }
+
     }
 
     public void check(UpdatePostRequest request){
         isExistsByNameAndIdNot(request.getTitle(), request.getId());
-        if (request.getImage() != null) {
-            validateImage(request.getImage());
-        }
+
     }
 
     @Override
