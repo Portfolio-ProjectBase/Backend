@@ -10,6 +10,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,4 +53,25 @@ public class PostController extends BaseController {
             throw new RuntimeException("JSON parsing error", e);
         }
     }
+    @GetMapping
+    @Operation(summary = "Get all posts with pagination and sorting")
+    public ResponseEntity<Page<PostResponse>> getAllPosts(
+            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "sort", defaultValue = "desc") String sortDirection, // Sıralama yönü
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
+        // Sıralama yönünü belirle
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        // Pageable nesnesini oluştur
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "createdDate"));
+
+
+        // Servisi çağır
+        Page<PostResponse> posts = postService.getAllPosts(search, pageable);
+        return ResponseEntity.ok(posts);
+    }
+
+
 }

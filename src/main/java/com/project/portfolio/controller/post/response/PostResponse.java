@@ -7,6 +7,7 @@ import com.project.portfolio.core.Base;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,9 +15,11 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder
-public class PostResponse  extends Base {
+public class PostResponse {
+    private int id;
     private String title;
     private String detail;
     private boolean isActive;
     private List<PostContentResponse> contents;
+    private LocalDateTime createdDate;
 }

@@ -12,4 +12,6 @@ public interface PostRepository extends JpaRepository<Post,Integer> {
 
     boolean existsById(int id);
     Page<Post> findAll(Pageable pageable);
+
+    Page<Post> findAllByTitleContainingIgnoreCase(String title, Pageable pageable);
 }

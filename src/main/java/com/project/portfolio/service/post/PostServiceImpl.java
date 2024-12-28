@@ -10,6 +10,12 @@ import com.project.portfolio.repository.postContent.PostContent;
 import com.project.portfolio.service.ImageRules;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,6 +65,18 @@ public class PostServiceImpl implements PostService {
         return buildBlogResponse(blog);
     }
 
+    @Override
+    public Page<PostResponse> getAllPosts(String search, Pageable pageable) {
+
+        if (search != null && !search.isEmpty()) {
+            return postRepository.findAllByTitleContainingIgnoreCase(search, pageable)
+                    .map(this::buildBlogResponse);
+        } else {
+            return postRepository.findAll(pageable).map(this::buildBlogResponse);
+        }
+    }
+
+
     private MultipartFile findMatchingImageFile(List<MultipartFile> imageFiles, String content) {
         return imageFiles.stream()
                 .filter(file -> file.getOriginalFilename() != null && file.getOriginalFilename().equals(content))
@@ -75,6 +93,7 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+
     private PostResponse buildBlogResponse(Post blog) {
         return PostResponse.builder()
                 .id(blog.getId())
@@ -82,6 +101,7 @@ public class PostServiceImpl implements PostService {
                 .contents(blog.getElements().stream()
                         .map(this::buildBlogElementResponse)
                         .toList())
+                .createdDate(blog.getCreatedDate())
                 .build();
     }
 
