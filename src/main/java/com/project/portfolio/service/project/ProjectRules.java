@@ -43,11 +43,12 @@ public class ProjectRules implements BaseRules {
     }
     public void check(UpdateProjectRequest request){
         isExistsByNameAndIdNot(request.getTitle(),request.getId());
-        if (request.getImage() != null) {
-            validateImage(request.getImage()); // Image validation with optional check
-        }
-        else{
-            throw new ValidationException(IMAGE_VALIDATION_FAILED);
+        if (request.getIsGetNewPicture()) {
+            if (request.getImage() != null) {
+                validateImage(request.getImage());
+            } else {
+                throw new ValidationException(IMAGE_VALIDATION_FAILED);
+            }
         }
     }
     @Override

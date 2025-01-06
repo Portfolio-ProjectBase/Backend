@@ -35,6 +35,9 @@ public class Project extends ImageBase {
     @Column(name = "github_link")
     private String githubLink;
 
+    @Column(name = "isGetNewPicture", nullable = false)
+    private Boolean isGetNewPicture;
+
     @ManyToMany
     @JoinTable(
             name = "project_skill",
@@ -52,7 +55,9 @@ public class Project extends ImageBase {
                 .liveSiteLink(getLiveSiteLink())
                 .githubLink(getGithubLink())
                 .imageBase64(getImageBase64())
-                .skillName(skills.stream().map(Skill::getName).collect(Collectors.toList()))
+                .skillNames(skills.stream().map(Skill::getName).collect(Collectors.toList()))
+                .skillIds(skills.stream().map(Skill::getId).collect(Collectors.toList()))
+                .isGetNewPicture(getIsGetNewPicture())
                 .build();
     }
 

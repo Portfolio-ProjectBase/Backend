@@ -41,9 +41,39 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void update(UpdateProjectRequest updateProjectRequest) {
         rules.check(rules.fix(updateProjectRequest));
-        Project project = toEntity(updateProjectRequest);
-        projectRepository.save(project);
+
+        // Mevcut projeyi veri tabanından al
+        Project existingProject = projectRepository.findById(updateProjectRequest.getId())
+                .orElseThrow(() -> new DataNotFoundException(NotFoundExceptionType.PROJECT_NOT_FOUND));
+
+        System.out.println("isGetNewPicture: " + updateProjectRequest.getIsGetNewPicture());
+        System.out.println("New Image: " + (updateProjectRequest.getImage() != null ? "Image provided" : "No image provided"));
+        System.out.println("Existing Image: " + (existingProject.getImage() != null ? "Existing image found" : "No existing image"));
+
+        // Eğer yeni resim gönderildiyse ve `isGetNewPicture` true ise, resmi güncelle
+        if (updateProjectRequest.getIsGetNewPicture() && updateProjectRequest.getImage() != null) {
+            existingProject.setImage(updateProjectRequest.getImage()); // Yeni resmi ayarla
+            System.out.println("New image set to existingProject");
+        }
+
+        // Diğer alanları güncellemek için `toEntity` metodunu kullan
+        Project updatedProject = toEntity(updateProjectRequest);
+
+        // `toEntity` den gelen değerleri mevcut proje ile birleştir
+        updatedProject.setId(existingProject.getId()); // ID aynı kalmalı
+        if (!updateProjectRequest.getIsGetNewPicture()) {
+            updatedProject.setImage(existingProject.getImage()); // Yeni resim yoksa eski resmi koru
+            System.out.println("Existing image preserved");
+        }
+
+        System.out.println("Final updatedProject Image: " + (updatedProject.getImage() != null ? "Image found" : "No image"));
+
+        // Projeyi kaydet
+        projectRepository.save(updatedProject);
+        System.out.println("Project saved successfully");
     }
+
+
 
     @Override
     public PagedResponse<ProjectResponse> getAll(int page, int size) {
@@ -71,8 +101,30 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public ProjectResponse getById(int id) {
-        rules.checkData(id);
-        return projectRepository.findById(id).orElseThrow().toResponse();
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+
+        // Proje detaylarını doldur
+        ProjectResponse response = new ProjectResponse();
+        response.setTitle(project.getTitle());
+        response.setDetail(project.getDetail());
+        response.setProjectDate(project.getProjectDate());
+        response.setLiveSiteLink(project.getLiveSiteLink());
+        response.setGithubLink(project.getGithubLink());
+
+        // Skill ID'lerini ekle
+        List<Integer> skillIds = project.getSkills().stream()
+                .map(Skill::getId)
+                .toList();
+        response.setSkillIds(skillIds);
+
+        // Skill isimlerini ekle
+        List<String> skillNames = project.getSkills().stream()
+                .map(Skill::getName)
+                .toList();
+        response.setSkillNames(skillNames);
+
+        return response;
     }
 
     @Override
@@ -111,7 +163,8 @@ public class ProjectServiceImpl implements ProjectService{
                 .projectDate(updateProjectRequest.getProjectDate())
                 .liveSiteLink(updateProjectRequest.getLiveSiteLink())
                 .githubLink(updateProjectRequest.getGithubLink())
-                .image(updateProjectRequest.getImage())
+                .image(updateProjectRequest.getIsGetNewPicture() ? updateProjectRequest.getImage() : null) // Resmi kontrol et
+                .isGetNewPicture(updateProjectRequest.getIsGetNewPicture())
                 .skills(skills)
                 .build();
     }

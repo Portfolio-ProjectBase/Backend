@@ -31,4 +31,6 @@ public class UpdateProjectRequest {
     @NotBlank
     private String githubLink;
     private List<Integer> skillIds;
+
+    private Boolean isGetNewPicture;
 }

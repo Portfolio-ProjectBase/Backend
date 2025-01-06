@@ -66,16 +66,18 @@ public class ProjectController extends BaseController {
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Void> updateProject(@Valid
-                                                  @RequestParam("id") int id,
-                                                  @RequestParam String title,
-                                                  @RequestParam LocalDate projectDate,
-                                                  @RequestParam String detail,
-                                                  @RequestParam String liveSiteLink,
-                                                  @RequestParam String githubLink,
-                                                  @RequestParam List<Integer> skillIds,
-                                                  @RequestPart(value = "image", required = false) MultipartFile image
-                                                  ) {
+    public ResponseEntity<Void> updateProject(
+            @Valid
+            @RequestParam("id") int id,
+            @RequestParam String title,
+            @RequestParam LocalDate projectDate,
+            @RequestParam String detail,
+            @RequestParam String liveSiteLink,
+            @RequestParam String githubLink,
+            @RequestParam List<Integer> skillIds,
+            @RequestPart(value = "image", required = false) MultipartFile image,
+            @RequestParam Boolean isGetNewPicture // Yeni alan
+    ) {
         UpdateProjectRequest request = new UpdateProjectRequest();
         request.setId(id);
         request.setTitle(title);
@@ -84,16 +86,22 @@ public class ProjectController extends BaseController {
         request.setLiveSiteLink(liveSiteLink);
         request.setGithubLink(githubLink);
         request.setSkillIds(skillIds);
-        if (image != null) {
+        request.setIsGetNewPicture(isGetNewPicture);
+
+        if (isGetNewPicture && image != null) {
             try {
-                request.setImage(image.getBytes());
+                request.setImage(image.getBytes()); // Yeni resim yüklendi
             } catch (IOException e) {
-                return answer(HttpStatus.BAD_REQUEST); // Resim yükleme hatası durumunda
+                return answer(HttpStatus.BAD_REQUEST); // Resim yükleme hatası
             }
+        } else if (!isGetNewPicture) {
+            request.setImage(null); // Yeni resim yüklenmedi, eski resmi tut
         }
+
         projectService.update(request);
         return answer(HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProject(@PathVariable int id) {

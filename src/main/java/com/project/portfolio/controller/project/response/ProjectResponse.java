@@ -20,6 +20,7 @@ public class ProjectResponse extends ImageBaseResponse {
     private LocalDate projectDate;
     private String liveSiteLink;
     private String githubLink;
-
-    private List<String> skillName; // SkillResponse objeleriyle ilişkilendirilmiş Skill'ler
+    private List<Integer> skillIds; // Skill ID'ler
+    private List<String> skillNames; // SkillResponse objeleriyle ilişkilendirilmiş Skill'ler
+    private Boolean isGetNewPicture;
 }
