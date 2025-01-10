@@ -11,4 +11,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class SkillResponse extends ImageBaseResponse {
     private String name;
+    private Boolean isGetNewPicture;
 }

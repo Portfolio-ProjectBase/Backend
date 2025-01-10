@@ -61,11 +61,12 @@ public class SkillRules implements BaseRules {
 
     public void check(UpdateSkillRequest skillRequest){
         isExistsByNameAndIdNot(skillRequest.getName(), skillRequest.getId());
-        if (skillRequest.getImage() != null) {
-            validateImage(skillRequest.getImage()); // Image validation with optional check
-        }
-        else{
-            throw new ValidationException(IMAGE_VALIDATION_FAILED);
+        if (skillRequest.getIsGetNewPicture()) {
+            if (skillRequest.getImage() != null) {
+                validateImage(skillRequest.getImage());
+            } else {
+                throw new ValidationException(IMAGE_VALIDATION_FAILED);
+            }
         }
     }
 

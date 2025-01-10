@@ -16,4 +16,5 @@ public class UpdateSkillRequest {
     @NotBlank
     private String name;
     private byte[] image; // Resim dosyasını byte olarak almak için
+    private Boolean isGetNewPicture;
 }

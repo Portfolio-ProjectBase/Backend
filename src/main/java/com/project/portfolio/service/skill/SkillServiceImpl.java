@@ -1,19 +1,21 @@
 package com.project.portfolio.service.skill;
 
+import com.project.portfolio.controller.project.response.PagedResponse;
 import com.project.portfolio.controller.skill.request.CreateSkillRequest;
 import com.project.portfolio.controller.skill.request.UpdateSkillRequest;
 import com.project.portfolio.controller.skill.response.SkillResponse;
 import com.project.portfolio.core.exception.DataNotFoundException;
 import com.project.portfolio.core.exception.type.NotFoundExceptionType;
+import com.project.portfolio.repository.project.Project;
 import com.project.portfolio.repository.skill.Skill;
 import com.project.portfolio.repository.skill.SkillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.util.List;
-
-import static com.project.portfolio.core.exception.type.NotFoundExceptionType.SKILL_NOT_FOUND;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @Service
 @RequiredArgsConstructor
@@ -32,16 +34,45 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public void update(UpdateSkillRequest updateSkillRequest) {
         skillRules.check(skillRules.fix(updateSkillRequest));
-        Skill skill = toEntity(updateSkillRequest);
-        skillRepository.save(skill);
+        Skill existingSkill = skillRepository.findById(updateSkillRequest.getId())
+                .orElseThrow(() -> new DataNotFoundException(NotFoundExceptionType.SKILL_NOT_FOUND));
+        if (updateSkillRequest.getIsGetNewPicture() && updateSkillRequest.getImage() != null) {
+            existingSkill.setImage(updateSkillRequest.getImage()); // Yeni resmi ayarla
+            System.out.println("New image set to existingSkill");
+        }
+        Skill updatedSkill = toEntity(updateSkillRequest);
+        updatedSkill.setId(existingSkill.getId()); // ID aynı kalmalı
+        if (!updateSkillRequest.getIsGetNewPicture()) {
+            updatedSkill.setImage(existingSkill.getImage()); // Yeni resim yoksa eski resmi koru
+            System.out.println("Existing image preserved");
+        }
+        skillRepository.save(updatedSkill);
     }
 
     @Override
-    public List<SkillResponse> getAll() {
-        List<Skill> skills = skillRepository.findAll();
-        skillRules.checkDataList(skills);
-        return skills.stream().map(Skill::toResponse).toList();
+    public PagedResponse<SkillResponse> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Skill> skillsPage = skillRepository.findAll(pageable);
+
+        // Listeyi dönüştür
+        List<SkillResponse> skillResponses = skillsPage
+                .getContent()
+                .stream()
+                .map(Skill::toResponse)
+                .toList();
+
+        // Sayfalama bilgilerini ekle
+        return new PagedResponse<>(
+                skillResponses,
+                skillsPage.getNumber(),        // Mevcut sayfa numarası
+                skillsPage.getSize(),          // Sayfa boyutu
+                skillsPage.getTotalPages(),    // Toplam sayfa sayısı
+                skillsPage.getTotalElements(), // Toplam eleman sayısı
+                skillsPage.isLast()            // Son sayfa kontrolü
+        );
     }
+
+
 
     @Override
     public SkillResponse getById(int id) {
@@ -66,7 +97,8 @@ public class SkillServiceImpl implements SkillService {
         return Skill.builder()
                 .id(updateSkillRequest.getId())
                 .name(updateSkillRequest.getName())
-                .image(updateSkillRequest.getImage()) // Resmi byte[] olarak günceller
+                .image(updateSkillRequest.getIsGetNewPicture() ? updateSkillRequest.getImage() : null)
+                .isGetNewPicture(updateSkillRequest.getIsGetNewPicture())
                 .build();
     }
 }

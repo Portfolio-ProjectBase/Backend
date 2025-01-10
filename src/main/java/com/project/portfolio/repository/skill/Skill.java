@@ -28,12 +28,15 @@ public class Skill extends ImageBase {
 
     @ManyToMany(mappedBy = "skills")
     private List<Project> projects;
+    @Column(name = "isGetNewPicture")
+    private Boolean isGetNewPicture;
 
     public SkillResponse toResponse() {
         return SkillResponse.builder()
                 .id(getId())
                 .name(getName())
                 .imageBase64(getImageBase64()) // getImageBase64 metodunu kullanarak base64 string elde et
+                .isGetNewPicture(getIsGetNewPicture())
                 .build();
     }
 }

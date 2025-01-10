@@ -35,7 +35,7 @@ public class Project extends ImageBase {
     @Column(name = "github_link")
     private String githubLink;
 
-    @Column(name = "isGetNewPicture", nullable = false)
+    @Column(name = "isGetNewPicture")
     private Boolean isGetNewPicture;
 
     @ManyToMany

@@ -1,6 +1,7 @@
 package com.project.portfolio.controller.skill;
 
 import com.project.portfolio.controller.BaseController;
+import com.project.portfolio.controller.project.response.PagedResponse;
 import com.project.portfolio.controller.skill.request.CreateSkillRequest;
 import com.project.portfolio.controller.skill.request.UpdateSkillRequest;
 import com.project.portfolio.controller.skill.response.SkillResponse;
@@ -39,23 +40,32 @@ public class SkillController extends BaseController {
     }
 
     @PutMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Void> update(@Valid @RequestParam("id") int id,
-                                       @RequestParam("name") String name,
-                                       @RequestPart(value = "image", required = false) MultipartFile image) {
-        UpdateSkillRequest skillRequest = UpdateSkillRequest.builder()
-                .id(id)
-                .name(name)
-                .build();
-        if (image != null) {
+    public ResponseEntity<Void> update(
+            @Valid @RequestParam("id") int id,
+            @RequestParam("name") String name,
+            @RequestPart(value = "image", required = false) MultipartFile image,
+            @RequestParam Boolean isGetNewPicture) {
+        UpdateSkillRequest skillRequest = new UpdateSkillRequest();
+        skillRequest.setId(id);
+        skillRequest.setName(name);
+        skillRequest.setIsGetNewPicture(isGetNewPicture);
+
+        if (isGetNewPicture && image != null) {
+            // Yeni resim yüklendiğinde
             try {
                 skillRequest.setImage(image.getBytes());
             } catch (IOException e) {
-                return answer(HttpStatus.BAD_REQUEST); // Resim yükleme hatası durumunda
+                return answer(HttpStatus.BAD_REQUEST); // Resim yükleme hatası
             }
+        } else if (!isGetNewPicture) {
+            // Yeni resim yüklenmediğinde, eski resmi tutmak için null gönderiyoruz
+            skillRequest.setImage(null);
         }
+
         skillService.update(skillRequest);
         return answer(HttpStatus.NO_CONTENT);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<SkillResponse> getById(@PathVariable int id) {
@@ -63,11 +73,16 @@ public class SkillController extends BaseController {
         return answer(response, HttpStatus.OK);
     }
 
+
     @GetMapping
-    public ResponseEntity<List<SkillResponse>> getAll() {
-        List<SkillResponse> responses = skillService.getAll();
-        return answer(responses, HttpStatus.OK);
+    public ResponseEntity<PagedResponse<SkillResponse>> getAllSkills(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        PagedResponse<SkillResponse> response = skillService.getAll(page, size);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
