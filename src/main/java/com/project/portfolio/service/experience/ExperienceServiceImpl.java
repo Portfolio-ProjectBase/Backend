@@ -3,10 +3,14 @@ package com.project.portfolio.service.experience;
 import com.project.portfolio.controller.experience.request.CreateExperienceRequest;
 import com.project.portfolio.controller.experience.request.UpdateExperienceRequest;
 import com.project.portfolio.controller.experience.response.ExperienceResponse;
+import com.project.portfolio.controller.project.response.PagedResponse;
 import com.project.portfolio.repository.experience.Experience;
 import com.project.portfolio.repository.experience.ExperienceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -26,9 +30,22 @@ public class ExperienceServiceImpl implements ExperienceService{
     }
 
     @Override
-    public List<ExperienceResponse> getAll() {
-        List<Experience> experiences = repository.findAll();
-       return experiences.stream().map(Experience::toResponse).toList();
+    public PagedResponse<ExperienceResponse> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Experience> experiencesPage = repository.findAll(pageable);
+        List<ExperienceResponse> experienceResponses = experiencesPage
+                .getContent()
+                .stream()
+                .map(Experience::toResponse)
+                .toList();
+        return new PagedResponse<>(
+                experienceResponses,
+                experiencesPage.getNumber(),        // Mevcut sayfa numarası
+                experiencesPage.getSize(),          // Sayfa boyutu
+                experiencesPage.getTotalPages(),    // Toplam sayfa sayısı
+                experiencesPage.getTotalElements(), // Toplam eleman sayısı
+                experiencesPage.isLast()            // Son sayfa kontrolü
+        );
     }
 
     @Override

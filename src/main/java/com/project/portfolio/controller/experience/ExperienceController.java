@@ -4,6 +4,7 @@ import com.project.portfolio.controller.BaseController;
 import com.project.portfolio.controller.experience.request.CreateExperienceRequest;
 import com.project.portfolio.controller.experience.request.UpdateExperienceRequest;
 import com.project.portfolio.controller.experience.response.ExperienceResponse;
+import com.project.portfolio.controller.project.response.PagedResponse;
 import com.project.portfolio.service.experience.ExperienceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,11 +38,13 @@ public class ExperienceController extends BaseController {
         ExperienceResponse response = experienceService.getById(id);
         return answer(response, HttpStatus.OK);
     }
-
     @GetMapping
-    public ResponseEntity<List<ExperienceResponse>> getAll(){
-        List<ExperienceResponse> responses = experienceService.getAll();
-        return answer(responses, HttpStatus.OK);
+    public ResponseEntity<PagedResponse<ExperienceResponse>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        PagedResponse<ExperienceResponse> response = experienceService.getAll(page, size);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
