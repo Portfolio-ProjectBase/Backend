@@ -12,4 +12,5 @@ import lombok.experimental.SuperBuilder;
 public class SocialMediaResponse extends ImageBaseResponse {
     private String name;
     private String link;
+    private Boolean isGetNewPicture;
 }

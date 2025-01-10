@@ -1,6 +1,7 @@
 package com.project.portfolio.controller.socialMedia;
 
 import com.project.portfolio.controller.BaseController;
+import com.project.portfolio.controller.project.response.PagedResponse;
 import com.project.portfolio.controller.socialMedia.request.CreateSocialMediaRequest;
 import com.project.portfolio.controller.socialMedia.request.UpdateSocialMediaRequest;
 import com.project.portfolio.controller.socialMedia.response.SocialMediaResponse;
@@ -47,18 +48,24 @@ public class SocialMediaController extends BaseController {
                                         @RequestParam int id,
                                         @RequestParam String name,
                                         @RequestParam String link,
-                                        @RequestPart(value = "image", required = false) MultipartFile image) {
+                                        @RequestPart(value = "image", required = false) MultipartFile image,
+                                        @RequestParam Boolean isGetNewPicture) {
         UpdateSocialMediaRequest request = UpdateSocialMediaRequest.builder()
                 .id(id)
                 .name(name)
                 .link(link)
+                .isGetNewPicture(isGetNewPicture)
                 .build();
-        if (image != null) {
+        if (isGetNewPicture && image != null) {
             try {
                 request.setImage(image.getBytes());
             } catch (IOException e) {
                 return answer(HttpStatus.BAD_REQUEST); // Resim yükleme hatası durumunda
             }
+        }
+        else if (!isGetNewPicture) {
+            // Yeni resim yüklenmediğinde, eski resmi tutmak için null gönderiyoruz
+            request.setImage(null);
         }
         service.update(request);
         return answer(HttpStatus.NO_CONTENT);
@@ -72,13 +79,13 @@ public class SocialMediaController extends BaseController {
         return answer(response, HttpStatus.OK);
 
     }
-
     @GetMapping
-    public ResponseEntity<List<SocialMediaResponse>> getAll(){
-
-        List<SocialMediaResponse> responses = service.getAll();
-        return answer(responses, HttpStatus.OK);
-
+    public ResponseEntity<PagedResponse<SocialMediaResponse>> getAllSocialMedia(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        PagedResponse<SocialMediaResponse> response = service.getAll(page, size);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

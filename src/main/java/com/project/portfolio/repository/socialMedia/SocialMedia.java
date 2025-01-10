@@ -27,12 +27,16 @@ public class SocialMedia extends ImageBase {
     @Column(name = "link")
     private String link;
 
+    @Column(name = "isGetNewPicture")
+    private Boolean isGetNewPicture;
+
     public SocialMediaResponse toResponse(){
         return SocialMediaResponse.builder()
                 .id(getId())
                 .name(getName())
                 .link(getLink())
                 .imageBase64(getImageBase64())
+                .isGetNewPicture(getIsGetNewPicture())
                 .build();
     }
 

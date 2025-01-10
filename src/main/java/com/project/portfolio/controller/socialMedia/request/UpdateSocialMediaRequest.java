@@ -17,4 +17,5 @@ public class UpdateSocialMediaRequest {
     @NotBlank
     private String link;
     private byte[] image;
+    private Boolean isGetNewPicture;
 }
