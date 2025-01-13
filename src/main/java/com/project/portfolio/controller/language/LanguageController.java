@@ -23,7 +23,7 @@ public class LanguageController extends BaseController {
         service.create(request);
         return answer(HttpStatus.CREATED);
     }
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<Void> update(@RequestBody @Valid UpdateLanguageRequest request){
         service.update(request);
         return answer(HttpStatus.OK);
