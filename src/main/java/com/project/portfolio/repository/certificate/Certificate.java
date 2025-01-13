@@ -29,6 +29,8 @@ public class Certificate extends ImageBase {
     private String certificateSiteLink;
     @Column(name = "serial_number")
     private String serialNumber;
+    @Column(name = "isGetNewPicture")
+    private Boolean isGetNewPicture;
 
 
     public CertificateResponse toResponse(){
@@ -40,6 +42,7 @@ public class Certificate extends ImageBase {
                 .organisationName(getOrganisationName())
                 .serialNumber(getSerialNumber())
                 .imageBase64(getImageBase64())
+                .isGetNewPicture(getIsGetNewPicture())
                 .build();
     }
 

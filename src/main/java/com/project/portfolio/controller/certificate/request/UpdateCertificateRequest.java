@@ -27,4 +27,5 @@ public class UpdateCertificateRequest {
     private String certificateSiteLink;
     private String serialNumber;
     private byte[] image;
+    private Boolean isGetNewPicture;
 }

@@ -4,6 +4,7 @@ import com.project.portfolio.controller.BaseController;
 import com.project.portfolio.controller.certificate.request.CreateCertificateRequest;
 import com.project.portfolio.controller.certificate.request.UpdateCertificateRequest;
 import com.project.portfolio.controller.certificate.response.CertificateResponse;
+import com.project.portfolio.controller.project.response.PagedResponse;
 import com.project.portfolio.controller.skill.request.CreateSkillRequest;
 import com.project.portfolio.controller.skill.request.UpdateSkillRequest;
 import com.project.portfolio.service.certificate.CertificateService;
@@ -58,7 +59,8 @@ public class CertificateController extends BaseController {
                                        @RequestParam("givenDate") LocalDate givenDate,
                                        @RequestParam("certificateSiteLink") String certificateSiteLink,
                                        @RequestParam("serialNumber") String serialNumber,
-                                       @RequestPart(value = "image", required = false) MultipartFile image){
+                                       @RequestPart(value = "image", required = false) MultipartFile image,
+                                       @RequestParam Boolean isGetNewPicture) {
 
         UpdateCertificateRequest request = UpdateCertificateRequest.builder()
                 .id(id)
@@ -67,13 +69,18 @@ public class CertificateController extends BaseController {
                 .givenDate(givenDate)
                 .certificateSiteLink(certificateSiteLink)
                 .serialNumber(serialNumber)
+                .isGetNewPicture(isGetNewPicture)
                 .build();
-        if (image != null) {
+        if (isGetNewPicture && image != null) {
             try {
                 request.setImage(image.getBytes());
             } catch (IOException e) {
                 return answer(HttpStatus.BAD_REQUEST); // Resim yükleme hatası durumunda
             }
+        }
+        else if (!isGetNewPicture) {
+            // Yeni resim yüklenmediğinde, eski resmi tutmak için null gönderiyoruz
+            request.setImage(null);
         }
         certificateService.update(request);
         return answer(HttpStatus.NO_CONTENT);
@@ -86,9 +93,12 @@ public class CertificateController extends BaseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CertificateResponse>> getAll(){
-        List<CertificateResponse> responses = certificateService.getAll();
-        return answer(responses, HttpStatus.OK);
+    public ResponseEntity<PagedResponse<CertificateResponse>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        PagedResponse<CertificateResponse> response = certificateService.getAll(page, size);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

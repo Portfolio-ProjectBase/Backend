@@ -18,5 +18,6 @@ public class CertificateResponse extends ImageBaseResponse {
     LocalDate givenDate;
     String certificateSiteLink;
     String serialNumber;
+    Boolean isGetNewPicture;
 
 }
