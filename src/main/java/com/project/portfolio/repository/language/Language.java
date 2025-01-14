@@ -30,13 +30,8 @@ public class Language extends Base {
                 .id(getId())
                 .name(getName())
                 .languageLevel(getLanguageLevel().getName())
+                .levelId(getLanguageLevel().getId())
                 .build();
     }
 
-    public static Language fromResponse(LanguageResponse languageResponse){
-        return Language.builder()
-                .id(languageResponse.getId())
-                .name(languageResponse.getName())
-                .build();
-    }
 }
