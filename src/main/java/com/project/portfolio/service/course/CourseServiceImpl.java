@@ -3,12 +3,14 @@ package com.project.portfolio.service.course;
 import com.project.portfolio.controller.course.request.CreateCourseRequest;
 import com.project.portfolio.controller.course.request.UpdateCourseRequest;
 import com.project.portfolio.controller.course.response.CourseResponse;
+import com.project.portfolio.controller.project.response.PagedResponse;
 import com.project.portfolio.repository.course.Course;
 import com.project.portfolio.repository.course.CourseRepository;
-import com.project.portfolio.repository.user.User;
-import com.project.portfolio.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -43,12 +45,24 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public List<CourseResponse> getAll() {
-
-        List<Course> courses = repository.findAll();
-        List<CourseResponse> responses = courses.stream().map(Course::toResponse).toList();
-        return responses;
-
+    public PagedResponse<CourseResponse> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Course> coursesPage = repository.findAll(pageable);
+        // Listeyi dönüştür
+        List<CourseResponse> courseResponses = coursesPage
+                .getContent()
+                .stream()
+                .map(Course::toResponse)
+                .toList();
+        // Sayfalama bilgilerini ekle
+        return new PagedResponse<>(
+                courseResponses,
+                coursesPage.getNumber(),        // Mevcut sayfa numarası
+                coursesPage.getSize(),          // Sayfa boyutu
+                coursesPage.getTotalPages(),    // Toplam sayfa sayısı
+                coursesPage.getTotalElements(), // Toplam eleman sayısı
+                coursesPage.isLast()            // Son sayfa kontrolü
+        );
     }
 
     public void delete(int id) {

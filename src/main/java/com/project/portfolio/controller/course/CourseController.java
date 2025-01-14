@@ -4,6 +4,7 @@ import com.project.portfolio.controller.BaseController;
 import com.project.portfolio.controller.course.request.CreateCourseRequest;
 import com.project.portfolio.controller.course.request.UpdateCourseRequest;
 import com.project.portfolio.controller.course.response.CourseResponse;
+import com.project.portfolio.controller.project.response.PagedResponse;
 import com.project.portfolio.service.course.CourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,9 +40,12 @@ public class CourseController extends BaseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CourseResponse>> getAll(){
-        List<CourseResponse> responses = courseService.getAll();
-        return answer(responses, HttpStatus.OK);
+    public ResponseEntity<PagedResponse<CourseResponse>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        PagedResponse<CourseResponse> response = courseService.getAll(page, size);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
