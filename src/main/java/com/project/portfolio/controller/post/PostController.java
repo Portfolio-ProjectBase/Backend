@@ -3,17 +3,21 @@ package com.project.portfolio.controller.post;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.portfolio.controller.BaseController;
 import com.project.portfolio.controller.post.request.CreatePostRequest;
+import com.project.portfolio.controller.post.request.UpdatePostRequest;
 import com.project.portfolio.controller.post.response.PostResponse;
 import com.project.portfolio.controller.postContent.request.CreatePostContentRequest;
+import com.project.portfolio.controller.postContent.request.UpdatePostContentRequest;
 import com.project.portfolio.service.post.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +57,44 @@ public class PostController extends BaseController {
             throw new RuntimeException("JSON parsing error", e);
         }
     }
+
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update an existing post with content", description = "Update a blog post with dynamic elements and multiple image files.")
+    public ResponseEntity<Void> updatePost(
+            @RequestPart(value = "images", required = false) List<MultipartFile> imageFiles, // Güncelleme sırasında yüklenen dosyalar
+            @Parameter(
+                    required = true,
+                    schema = @Schema(implementation = UpdatePostRequest.class)
+            )
+            @RequestPart("body") String requestBodyAsJson) {
+
+        try {
+            // JSON String'i DTO'ya dönüştür
+            UpdatePostRequest updatePostRequest = objectMapper.readValue(requestBodyAsJson, UpdatePostRequest.class);
+
+            // Dinamik element listesini request içinden al
+            List<UpdatePostContentRequest> contentRequests = updatePostRequest.getElements();
+
+            // Eğer IMAGE içeriği varsa ve `isGetNewPicture` true ise, en az bir dosya olmalı
+            long requiredImagesCount = contentRequests.stream()
+                    .filter(element -> "IMAGE".equalsIgnoreCase(element.getContentType()) && Boolean.TRUE.equals(element.getIsGetNewPicture()))
+                    .count();
+
+            if (requiredImagesCount > 0 && (imageFiles == null || imageFiles.size() < requiredImagesCount)) {
+                throw new IllegalArgumentException("Image files are required when isGetNewPicture is true for IMAGE elements.");
+            }
+
+            // Servisi çağır
+            postService.update(updatePostRequest, contentRequests, imageFiles);
+
+            return ResponseEntity.noContent().build(); // Başarılı işlem durumunda boş içerik dön
+        } catch (Exception e) {
+            throw new RuntimeException("Error while updating post", e);
+        }
+    }
+
+
+
     @GetMapping
     @Operation(summary = "Get all posts with pagination and sorting")
     public ResponseEntity<Page<PostResponse>> getAllPosts(

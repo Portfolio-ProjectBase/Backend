@@ -1,12 +1,15 @@
 package com.project.portfolio.service.post;
 
 import com.project.portfolio.controller.post.request.CreatePostRequest;
+import com.project.portfolio.controller.post.request.UpdatePostRequest;
 import com.project.portfolio.controller.postContent.request.CreatePostContentRequest;
 import com.project.portfolio.controller.post.response.PostResponse;
+import com.project.portfolio.controller.postContent.request.UpdatePostContentRequest;
 import com.project.portfolio.controller.postContent.response.PostContentResponse;
 import com.project.portfolio.repository.post.Post;
 import com.project.portfolio.repository.post.PostRepository;
 import com.project.portfolio.repository.postContent.PostContent;
+import com.project.portfolio.repository.postContent.PostContentRepository;
 import com.project.portfolio.service.ImageRules;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +33,7 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+    private final PostContentRepository postContentRepository;
 
     public PostResponse create(CreatePostRequest blogRequest,
                                List<CreatePostContentRequest> elementRequests,
@@ -45,6 +49,7 @@ public class PostServiceImpl implements PostService {
             PostContent.PostContentBuilder builder = PostContent.builder()
                     .type(elementRequest.getType())
                     .content(elementRequest.getContent())
+                    .isGetNewPicture(true)
                     .post(blog)
                     .orderIndex(orderIndex++);
 
@@ -65,6 +70,7 @@ public class PostServiceImpl implements PostService {
         return buildBlogResponse(blog);
     }
 
+
     @Override
     public Page<PostResponse> getAllPosts(String search, Pageable pageable) {
 
@@ -74,6 +80,53 @@ public class PostServiceImpl implements PostService {
         } else {
             return postRepository.findAll(pageable).map(this::buildBlogResponse);
         }
+    }
+
+    @Override
+    public void update(UpdatePostRequest updatePostRequest,
+                       List<UpdatePostContentRequest> elementRequests,
+                       List<MultipartFile> imageFiles) {
+        // Mevcut Post'u bul
+        Post existingPost = postRepository.findById(updatePostRequest.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with ID: " + updatePostRequest.getId()));
+
+        // Ana başlık güncellemesi
+        existingPost.setTitle(updatePostRequest.getTitle());
+
+        // İçerikleri güncelleme
+        List<PostContent> updatedContents = new ArrayList<>();
+        int orderIndex = 1;
+
+        for (UpdatePostContentRequest elementRequest : elementRequests) {
+            PostContent content = postContentRepository.findById(elementRequest.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("PostContent not found with ID: " + elementRequest.getId()));
+
+            content.setType(elementRequest.getContentType());
+            content.setContent(elementRequest.getContent());
+            content.setOrderIndex(orderIndex++);
+
+            if ("IMAGE".equals(elementRequest.getContentType())) {
+                if (Boolean.TRUE.equals(elementRequest.getIsGetNewPicture()) && imageFiles != null && !imageFiles.isEmpty()) {
+                    // Yeni resimler eklenmişse
+                    MultipartFile matchingFile = findMatchingImageFile(imageFiles, elementRequest.getContent());
+                    if (matchingFile != null) {
+                        byte[] imageData = processImageFile(matchingFile);
+                        content.setImage(imageData);
+                    }
+                } else if (Boolean.FALSE.equals(elementRequest.getIsGetNewPicture())) {
+                    // Yeni resim eklenmemişse, eski resmi koru
+                    content.setImage(content.getImage());
+                }
+            }
+
+            updatedContents.add(content);
+        }
+
+        // İçerikleri kaydet
+        postContentRepository.saveAll(updatedContents);
+
+        // Ana Post'u kaydet
+        postRepository.save(existingPost);
     }
 
 
@@ -98,7 +151,7 @@ public class PostServiceImpl implements PostService {
         return PostResponse.builder()
                 .id(blog.getId())
                 .title(blog.getTitle())
-                .contents(blog.getElements().stream()
+                .elements(blog.getElements().stream()
                         .map(this::buildBlogElementResponse)
                         .toList())
                 .createdDate(blog.getCreatedDate())
@@ -110,8 +163,9 @@ public class PostServiceImpl implements PostService {
                 .id(element.getId())
                 .type(element.getType())
                 .content(element.getContent())
-                .imageBase64(element.getImageBase64()) // Eğer resim varsa Base64 olarak dön
+                .imageBase64(element.getIsGetNewPicture() ? element.getImageBase64() : null)
                 .orderIndex(element.getOrderIndex())
+                .isGetNewPicture(element.getIsGetNewPicture())
                 .build();
     }
 }

@@ -1,5 +1,7 @@
 package com.project.portfolio.controller.post.request;
 
+import com.project.portfolio.controller.postContent.request.CreatePostContentRequest;
+import com.project.portfolio.controller.postContent.request.UpdatePostContentRequest;
 import com.project.portfolio.controller.postContent.response.PostContentResponse;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +20,7 @@ public class UpdatePostRequest {
 
     @NotBlank
     private String title;
+    private List<UpdatePostContentRequest> elements;
 
     boolean isActive;
 }

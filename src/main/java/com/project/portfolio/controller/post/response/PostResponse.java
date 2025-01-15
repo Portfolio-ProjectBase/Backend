@@ -20,6 +20,6 @@ public class PostResponse {
     private String title;
     private String detail;
     private boolean isActive;
-    private List<PostContentResponse> contents;
+    private List<PostContentResponse> elements;
     private LocalDateTime createdDate;
 }

@@ -27,6 +27,9 @@ public class PostContent extends ImageBase {
     @Column(name = "order_index", nullable = false)
     private int orderIndex;
 
+    @Column(name = "isGetNewPicture")
+    private Boolean isGetNewPicture;
+
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
