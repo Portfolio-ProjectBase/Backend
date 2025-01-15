@@ -18,8 +18,8 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @SuperBuilder
 public class PostContent extends ImageBase {
-    @Column(name = "type", nullable = false)
-    private String type; // TEXT, IMAGE, CODE.
+    @Column(name = "contentType", nullable = false)
+    private String contentType; // TEXT, IMAGE, CODE.
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String content; // Metin veya kod içerikleri.

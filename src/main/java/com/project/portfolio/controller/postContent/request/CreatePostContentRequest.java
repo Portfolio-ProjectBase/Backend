@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class CreatePostContentRequest {
-    private String type; // TEXT, CODE, IMAGE
+    private String contentType; // TEXT, CODE, IMAGE
     private String content;
 }
 

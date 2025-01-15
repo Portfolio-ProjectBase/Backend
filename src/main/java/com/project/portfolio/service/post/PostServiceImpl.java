@@ -47,13 +47,13 @@ public class PostServiceImpl implements PostService {
 
         for (CreatePostContentRequest elementRequest : elementRequests) {
             PostContent.PostContentBuilder builder = PostContent.builder()
-                    .type(elementRequest.getType())
+                    .contentType(elementRequest.getContentType())
                     .content(elementRequest.getContent())
                     .isGetNewPicture(true)
                     .post(blog)
                     .orderIndex(orderIndex++);
 
-            if ("IMAGE".equals(elementRequest.getType()) && imageFiles != null && !imageFiles.isEmpty()) {
+            if ("IMAGE".equals(elementRequest.getContentType()) && imageFiles != null && !imageFiles.isEmpty()) {
                 MultipartFile matchingFile = findMatchingImageFile(imageFiles, elementRequest.getContent());
                 if (matchingFile != null) {
                     byte[] imageData = processImageFile(matchingFile);
@@ -86,24 +86,53 @@ public class PostServiceImpl implements PostService {
     public void update(UpdatePostRequest updatePostRequest,
                        List<UpdatePostContentRequest> elementRequests,
                        List<MultipartFile> imageFiles) {
+
         // Mevcut Post'u bul
         Post existingPost = postRepository.findById(updatePostRequest.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Post not found with ID: " + updatePostRequest.getId()));
 
         // Ana başlık güncellemesi
         existingPost.setTitle(updatePostRequest.getTitle());
+        existingPost.setActive(updatePostRequest.isActive());
 
         // İçerikleri güncelleme
         List<PostContent> updatedContents = new ArrayList<>();
         int orderIndex = 1;
 
         for (UpdatePostContentRequest elementRequest : elementRequests) {
-            PostContent content = postContentRepository.findById(elementRequest.getId())
-                    .orElseThrow(() -> new EntityNotFoundException("PostContent not found with ID: " + elementRequest.getId()));
+            PostContent content;
+            if (elementRequest.getId() == null || elementRequest.getId() < 0) {
+                content = new PostContent();
+                content.setPost(existingPost); // Yeni içeriği mevcut Post'a bağla
+                content.setContentType(elementRequest.getContentType());
+                content.setContent(elementRequest.getContent());
+                content.setIsGetNewPicture(elementRequest.getIsGetNewPicture());
+                content.setOrderIndex(orderIndex++); // Sıra numarası
+                if ("IMAGE".equals(elementRequest.getContentType())) {
+                    if (Boolean.TRUE.equals(elementRequest.getIsGetNewPicture()) && imageFiles != null && !imageFiles.isEmpty()) {
+                        // Yeni resim varsa, eşleşen dosyayı işle
+                        MultipartFile matchingFile = findMatchingImageFile(imageFiles, elementRequest.getContent());
+                        if (matchingFile != null) {
+                            byte[] imageData = processImageFile(matchingFile);
+                            content.setImage(imageData);
+                        }
+                    } else {
+                        // Yeni resim gönderilmediyse, image alanını boş bırak
+                        content.setImage(null);
+                    }
+                }
+            } else {
+                content = postContentRepository.findById(elementRequest.getId())
+                        .orElseThrow(() -> new EntityNotFoundException("PostContent not found with ID: " + elementRequest.getId()));
 
-            content.setType(elementRequest.getContentType());
-            content.setContent(elementRequest.getContent());
-            content.setOrderIndex(orderIndex++);
+                content.setContentType(elementRequest.getContentType());
+                content.setContent(elementRequest.getContent());
+                content.setOrderIndex(orderIndex++);
+            }
+
+            if (elementRequest.getContentType() == null || elementRequest.getContentType().isEmpty()) {
+                throw new IllegalArgumentException("ContentType cannot be null or empty");
+            }
 
             if ("IMAGE".equals(elementRequest.getContentType())) {
                 if (Boolean.TRUE.equals(elementRequest.getIsGetNewPicture()) && imageFiles != null && !imageFiles.isEmpty()) {
@@ -161,7 +190,7 @@ public class PostServiceImpl implements PostService {
     private PostContentResponse buildBlogElementResponse(PostContent element) {
         return PostContentResponse.builder()
                 .id(element.getId())
-                .type(element.getType())
+                .contentType(element.getContentType())
                 .content(element.getContent())
                 .imageBase64(element.getIsGetNewPicture() ? element.getImageBase64() : null)
                 .orderIndex(element.getOrderIndex())

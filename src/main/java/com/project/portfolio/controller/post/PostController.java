@@ -71,14 +71,22 @@ public class PostController extends BaseController {
         try {
             // JSON String'i DTO'ya dönüştür
             UpdatePostRequest updatePostRequest = objectMapper.readValue(requestBodyAsJson, UpdatePostRequest.class);
+            System.out.println("UpdatePostRequest: " + updatePostRequest);
+            for (UpdatePostContentRequest contentRequest : updatePostRequest.getElements()) {
+                System.out.println("Content ID: " + contentRequest.getId());
+                System.out.println("Content Type: " + contentRequest.getContentType());
+                System.out.println("Content: " + contentRequest.getContent());
+            }
 
             // Dinamik element listesini request içinden al
             List<UpdatePostContentRequest> contentRequests = updatePostRequest.getElements();
+            System.out.println("ContentRequests: " + contentRequests);
 
             // Eğer IMAGE içeriği varsa ve `isGetNewPicture` true ise, en az bir dosya olmalı
             long requiredImagesCount = contentRequests.stream()
                     .filter(element -> "IMAGE".equalsIgnoreCase(element.getContentType()) && Boolean.TRUE.equals(element.getIsGetNewPicture()))
                     .count();
+            System.out.println("RequiredImagesCount: " + requiredImagesCount);
 
             if (requiredImagesCount > 0 && (imageFiles == null || imageFiles.size() < requiredImagesCount)) {
                 throw new IllegalArgumentException("Image files are required when isGetNewPicture is true for IMAGE elements.");
@@ -86,11 +94,12 @@ public class PostController extends BaseController {
 
             // Servisi çağır
             postService.update(updatePostRequest, contentRequests, imageFiles);
-
             return ResponseEntity.noContent().build(); // Başarılı işlem durumunda boş içerik dön
         } catch (Exception e) {
+            e.printStackTrace(); // Hata detaylarını konsola yazdır
             throw new RuntimeException("Error while updating post", e);
         }
+
     }
 
 

@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class PostContentResponse extends ImageBaseResponse {
 
-    private String type;
+    private String contentType;
     private String content;
     private Integer orderIndex;
     private Boolean isGetNewPicture;
