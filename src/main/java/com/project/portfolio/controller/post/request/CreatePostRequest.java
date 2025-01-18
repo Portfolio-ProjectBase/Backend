@@ -15,6 +15,6 @@ import java.util.List;
 @SuperBuilder
 public class CreatePostRequest {
     private String title;
-    private boolean isActive;
+    private Boolean isActive;
     private List<CreatePostContentRequest> elements;
 }

@@ -28,7 +28,8 @@ public class Post extends Base {
     private String title;
 
     @Column(name = "is_active")
-    private boolean isActive;
+    private Boolean isActive;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("orderIndex ASC")
     private List<PostContent>  elements = new ArrayList<>();
@@ -39,7 +40,7 @@ public class Post extends Base {
         return PostResponse.builder()
                 .id(getId())
                 .title(getTitle())
-                .isActive(isActive())
+                .isActive(getIsActive())
                 .build();
     }
 

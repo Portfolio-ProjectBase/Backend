@@ -71,16 +71,16 @@ public class PostController extends BaseController {
         try {
             // JSON String'i DTO'ya dönüştür
             UpdatePostRequest updatePostRequest = objectMapper.readValue(requestBodyAsJson, UpdatePostRequest.class);
-            System.out.println("UpdatePostRequest: " + updatePostRequest);
-            for (UpdatePostContentRequest contentRequest : updatePostRequest.getElements()) {
+
+           /* for (UpdatePostContentRequest contentRequest : updatePostRequest.getElements()) {
                 System.out.println("Content ID: " + contentRequest.getId());
                 System.out.println("Content Type: " + contentRequest.getContentType());
                 System.out.println("Content: " + contentRequest.getContent());
-            }
+            }*/
 
             // Dinamik element listesini request içinden al
             List<UpdatePostContentRequest> contentRequests = updatePostRequest.getElements();
-            System.out.println("ContentRequests: " + contentRequests);
+            //System.out.println("ContentRequests: " + contentRequests);
 
             // Eğer IMAGE içeriği varsa ve `isGetNewPicture` true ise, en az bir dosya olmalı
             long requiredImagesCount = contentRequests.stream()
@@ -102,6 +102,12 @@ public class PostController extends BaseController {
 
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Get a post by ID")
+    public ResponseEntity<PostResponse> getPostById(@PathVariable int id) {
+        PostResponse postResponse = postService.getById(id);
+        return ResponseEntity.ok(postResponse);
+    }
 
 
     @GetMapping
@@ -122,6 +128,12 @@ public class PostController extends BaseController {
         // Servisi çağır
         Page<PostResponse> posts = postService.getAllPosts(search, pageable);
         return ResponseEntity.ok(posts);
+    }
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a post")
+    public ResponseEntity<Void> deletePost(@PathVariable int id) {
+        postService.deletePost(id);
+        return ResponseEntity.noContent().build();
     }
 
 

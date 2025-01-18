@@ -24,6 +24,7 @@ public interface PostService {
                 List<MultipartFile> imageFiles
     );
 
-
+    void deletePost(int postId);
+    PostResponse getById(int id);
 
 }

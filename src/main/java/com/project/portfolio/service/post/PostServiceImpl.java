@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class PostServiceImpl implements PostService {
                                List<MultipartFile> imageFiles) {
         Post blog = Post.builder()
                 .title(blogRequest.getTitle())
+                .isActive(blogRequest.getIsActive())
                 .build();
 
         List<PostContent> elements = new ArrayList<>();
@@ -90,10 +92,13 @@ public class PostServiceImpl implements PostService {
         // Mevcut Post'u bul
         Post existingPost = postRepository.findById(updatePostRequest.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Post not found with ID: " + updatePostRequest.getId()));
-
+        System.out.println("deleted"+updatePostRequest.getDeletedElements());
+        if (updatePostRequest.getDeletedElements() != null && !updatePostRequest.getDeletedElements().isEmpty()) {
+            postContentRepository.deleteAllById(updatePostRequest.getDeletedElements());
+        }
         // Ana başlık güncellemesi
         existingPost.setTitle(updatePostRequest.getTitle());
-        existingPost.setActive(updatePostRequest.isActive());
+        existingPost.setIsActive(updatePostRequest.getIsActive());
 
         // İçerikleri güncelleme
         List<PostContent> updatedContents = new ArrayList<>();
@@ -157,6 +162,19 @@ public class PostServiceImpl implements PostService {
         // Ana Post'u kaydet
         postRepository.save(existingPost);
     }
+    public void deletePost(int postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with ID: " + postId));
+
+        postRepository.delete(post);
+    }
+
+    public PostResponse getById(int id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with ID: " + id));
+
+        return buildBlogResponse(post);
+    }
 
 
     private MultipartFile findMatchingImageFile(List<MultipartFile> imageFiles, String content) {
@@ -180,6 +198,7 @@ public class PostServiceImpl implements PostService {
         return PostResponse.builder()
                 .id(blog.getId())
                 .title(blog.getTitle())
+                .isActive(blog.getIsActive())
                 .elements(blog.getElements().stream()
                         .map(this::buildBlogElementResponse)
                         .toList())

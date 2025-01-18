@@ -22,5 +22,6 @@ public class UpdatePostRequest {
     private String title;
     private List<UpdatePostContentRequest> elements;
 
-    boolean isActive;
+    private Boolean isActive;
+    private List<Integer> deletedElements;
 }
