@@ -52,7 +52,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/certificates/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/projects/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/language/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/resumes/download/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/resumes/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/contacts/**").permitAll()

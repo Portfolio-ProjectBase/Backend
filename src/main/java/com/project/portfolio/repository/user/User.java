@@ -55,6 +55,7 @@ public class User extends Base implements UserDetails {
                 .id(getId())
                 .name(getName())
                 .surname(getSurname())
+                .username(getUsername())
                 .detail(getDetail())
                 .emailAddress(getEmailAddress())
                 .aboutMe(getAboutMe())

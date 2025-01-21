@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import static com.project.portfolio.core.exception.type.FileExceptionType.RESUME_FILE_ERROR;
 import static com.project.portfolio.core.exception.type.NotFoundExceptionType.RESUME_NOT_FOUND;
@@ -21,11 +23,13 @@ public class ResumeServiceImpl implements ResumeService {
     private final ResumeRules resumeRules;
 
     public void saveResume(MultipartFile file) {
-
-
         resumeRules.validateResumeFile(file);
 
         try {
+            // Önce tüm mevcut kayıtları sil
+            resumeRepository.deleteAll();
+
+            // Yeni özgeçmişi kaydet
             Resume resume = Resume.builder()
                     .name(file.getOriginalFilename())
                     .fileType(file.getContentType())
@@ -37,11 +41,25 @@ public class ResumeServiceImpl implements ResumeService {
         }
     }
 
+
     @Override
     public byte[] getResume() throws IOException {
         // Veritabanında sadece tek bir kayıt olduğundan ilkini döndürüyoruz
         Resume resume = resumeRepository.findAll().stream().findFirst()
                 .orElseThrow(() -> new DataNotFoundException(RESUME_NOT_FOUND));
         return resume.getFileData(); // PDF dosyasının byte array'ini döndürüyoruz
+    }
+    public boolean checkResumeExists() {
+        return resumeRepository.count() > 0; // Veritabanında herhangi bir kayıt var mı kontrol eder
+    }
+    public Map<String, String> getResumeInfo() {
+        List<Resume> resumes = resumeRepository.findAll();
+
+        if (resumes.isEmpty()) {
+            return Map.of("exists", "false", "name", "");
+        }
+
+        Resume resume = resumes.get(0);
+        return Map.of("exists", "true", "name", resume.getName());
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/resumes")
@@ -41,6 +42,16 @@ public class ResumeController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+    }
+    @GetMapping("/exists")
+    public ResponseEntity<Boolean> checkResumeExists() {
+        boolean exists = resumeService.checkResumeExists();
+        return ResponseEntity.ok(exists);
+    }
+    @GetMapping("/info")
+    public ResponseEntity<Map<String, String>> getResumeInfo() {
+        Map<String, String> resumeInfo = resumeService.getResumeInfo();
+        return ResponseEntity.ok(resumeInfo);
     }
 
 }
