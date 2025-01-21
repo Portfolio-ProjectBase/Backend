@@ -17,7 +17,7 @@ public interface PostService {
                         List<CreatePostContentRequest> elementRequests,
                         List<MultipartFile> imageFiles);
 
-    Page<PostResponse> getAllPosts(String search, Pageable pageable) ;
+    Page<PostResponse> getAllPosts(String search, Boolean isActive, Pageable pageable) ;
 
     void update(UpdatePostRequest updatePostRequest,
                 List<UpdatePostContentRequest> elementRequests,

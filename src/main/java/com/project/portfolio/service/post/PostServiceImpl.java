@@ -74,15 +74,28 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public Page<PostResponse> getAllPosts(String search, Pageable pageable) {
-
+    public Page<PostResponse> getAllPosts(String search, Boolean isActive, Pageable pageable) {
         if (search != null && !search.isEmpty()) {
-            return postRepository.findAllByTitleContainingIgnoreCase(search, pageable)
-                    .map(this::buildBlogResponse);
+            if (isActive != null) {
+                // Filter by search and isActive
+                return postRepository.findAllByTitleContainingIgnoreCaseAndIsActive(search, isActive, pageable)
+                        .map(this::buildBlogResponse);
+            } else {
+                // Filter by search only
+                return postRepository.findAllByTitleContainingIgnoreCase(search, pageable)
+                        .map(this::buildBlogResponse);
+            }
         } else {
-            return postRepository.findAll(pageable).map(this::buildBlogResponse);
+            if (isActive != null) {
+                // Filter by isActive only
+                return postRepository.findAllByIsActive(isActive, pageable).map(this::buildBlogResponse);
+            } else {
+                // No filter applied, return all posts
+                return postRepository.findAll(pageable).map(this::buildBlogResponse);
+            }
         }
     }
+
 
     @Override
     public void update(UpdatePostRequest updatePostRequest,

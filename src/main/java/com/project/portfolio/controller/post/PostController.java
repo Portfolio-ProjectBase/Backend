@@ -116,7 +116,10 @@ public class PostController extends BaseController {
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "sort", defaultValue = "desc") String sortDirection, // Sıralama yönü
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) {
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "isActive", required = false) Boolean isActive
+
+    ) {
 
         // Sıralama yönünü belirle
         Sort.Direction direction = sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
@@ -126,7 +129,7 @@ public class PostController extends BaseController {
 
 
         // Servisi çağır
-        Page<PostResponse> posts = postService.getAllPosts(search, pageable);
+        Page<PostResponse> posts = postService.getAllPosts(search, isActive, pageable);
         return ResponseEntity.ok(posts);
     }
     @DeleteMapping("/{id}")
