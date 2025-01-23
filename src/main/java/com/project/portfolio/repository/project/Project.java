@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class Project extends ImageBase {
     @Column(name = "title")
     private String title;
-    @Column(name = "detail")
+    @Column(name = "detail", length = 2000)
     private String detail;
     @Column(name = "project_date")
     private LocalDate projectDate;

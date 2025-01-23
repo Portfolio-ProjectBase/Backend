@@ -24,7 +24,7 @@ public class Experience extends Base {
     private String departmentTitle;
     @Column(name = "workplace")
     private String workplace;
-    @Column(name = "detail")
+    @Column(name = "detail", length = 1000)
     private String detail;
     @Column(name = "position")
     private String position;

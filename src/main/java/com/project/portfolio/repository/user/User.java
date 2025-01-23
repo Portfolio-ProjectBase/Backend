@@ -42,7 +42,7 @@ public class User extends Base implements UserDetails {
     private String username;
     @Column(name = "password")
     private String password;
-    @Column(name = "about_me")
+    @Column(name = "about_me", length = 1000)
     private String aboutMe;
     @Column(name = "detail")
     private String detail;

@@ -25,7 +25,7 @@ public class Contact extends Base {
     private String surname;
     @Column(name = "email_address")
     private String emailAddress;
-    @Column(name = "message")
+    @Column(name = "message", length = 1000)
     private String message;
 
     public ContactResponse toResponse(){

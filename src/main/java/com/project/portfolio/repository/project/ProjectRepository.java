@@ -10,5 +10,6 @@ public interface ProjectRepository extends JpaRepository<Project,Integer> {
     boolean existsByTitleAndIdNot(String name, int id);
 
     boolean existsById(int id);
+    // @EntityGraph(attributePaths = {"skills"})
     Page<Project> findAll(Pageable pageable);
 }
