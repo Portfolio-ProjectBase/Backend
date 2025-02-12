@@ -33,19 +33,35 @@ public class CertificateServiceImpl implements CertificateService{
     @Override
     public void update(UpdateCertificateRequest certificateRequest) {
         rule.check(rule.fix(certificateRequest));
-        certificateRepository.save(toEntity(certificateRequest));
+
+        // Mevcut sertifikayı veri tabanından al
         Certificate existingCertificate = certificateRepository.findById(certificateRequest.getId())
                 .orElseThrow(() -> new DataNotFoundException(NotFoundExceptionType.CERTIFICATE_NOT_FOUND));
+
+        // Eğer yeni resim gönderildiyse ve `isGetNewPicture` true ise, resmi güncelle
         if (certificateRequest.getIsGetNewPicture() && certificateRequest.getImage() != null) {
-            existingCertificate.setImage(certificateRequest.getImage());
+            existingCertificate.setImage(certificateRequest.getImage()); // Yeni resmi ayarla
+            System.out.println("New image set to existingCertificate");
         }
+
+        // Diğer alanları güncellemek için `toEntity` metodunu kullan
         Certificate updatedCertificate = toEntity(certificateRequest);
-        updatedCertificate.setId(existingCertificate.getId());
+
+        // `toEntity` den gelen değerleri mevcut sertifika ile birleştir
+        updatedCertificate.setId(existingCertificate.getId()); // ID aynı kalmalı
+
         if (!certificateRequest.getIsGetNewPicture()) {
-            updatedCertificate.setImage(existingCertificate.getImage());
+            updatedCertificate.setImage(existingCertificate.getImage()); // Yeni resim yoksa eski resmi koru
+            System.out.println("Existing image preserved");
         }
+
+        System.out.println("Final updatedCertificate Image: " + (updatedCertificate.getImage() != null ? "Image found" : "No image"));
+
+        // Güncellenmiş nesneyi kaydet
         certificateRepository.save(updatedCertificate);
+        System.out.println("Certificate saved successfully");
     }
+
 
     @Override
     public PagedResponse<CertificateResponse> getAll(int page, int size) {

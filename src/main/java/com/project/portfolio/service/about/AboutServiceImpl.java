@@ -8,6 +8,7 @@ import com.project.portfolio.repository.about.AboutRepository;
 import com.project.portfolio.repository.card.Card;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class AboutServiceImpl implements AboutService{
         about.getCards().forEach(card -> card.setAbout(about)); // 🔹 Ensure each Card has an About reference
         aboutRepository.save(about);
     }
-
+    @Transactional
     @Override
     public List<AboutResponse> getAll() {
         return aboutRepository.findAll()

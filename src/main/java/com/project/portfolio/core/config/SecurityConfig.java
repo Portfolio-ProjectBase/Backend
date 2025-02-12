@@ -58,6 +58,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/contacts/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/about/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/about/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/about/**").permitAll()
                         .anyRequest().authenticated()
                 )

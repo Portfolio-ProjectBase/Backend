@@ -47,9 +47,6 @@ public class ProjectServiceImpl implements ProjectService{
         Project existingProject = projectRepository.findById(updateProjectRequest.getId())
                 .orElseThrow(() -> new DataNotFoundException(NotFoundExceptionType.PROJECT_NOT_FOUND));
 
-        System.out.println("isGetNewPicture: " + updateProjectRequest.getIsGetNewPicture());
-        System.out.println("New Image: " + (updateProjectRequest.getImage() != null ? "Image provided" : "No image provided"));
-        System.out.println("Existing Image: " + (existingProject.getImage() != null ? "Existing image found" : "No existing image"));
 
         // Eğer yeni resim gönderildiyse ve `isGetNewPicture` true ise, resmi güncelle
         if (updateProjectRequest.getIsGetNewPicture() && updateProjectRequest.getImage() != null) {

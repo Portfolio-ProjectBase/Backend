@@ -34,7 +34,7 @@ public class AboutController extends BaseController {
     @PutMapping
     public ResponseEntity<Void> update(@Valid @RequestBody UpdateAboutRequest request) {
         aboutService.update(request);
-        return answer(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok().build();
     }
 
     /**
