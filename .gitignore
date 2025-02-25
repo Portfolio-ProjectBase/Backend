@@ -29,6 +29,8 @@ src/main/resources/data.sql
 src/main/resources/schema.sql
 
 src/main/java/com/project/portfolio/controller/auth/AuthController.java
+src/main/java/com/project/portfolio/core/config/SecurityConfig.java
+
 
 ### NetBeans ###
 /nbproject/private/
