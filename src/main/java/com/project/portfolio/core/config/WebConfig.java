@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Tüm URL'ler için CORS yapılandırması yapılır
-                .allowedOrigins("*") // Tüm kaynaklardan gelen isteklere izin verilir
+                .allowedOrigins("https://denizkiritoglu.com", "https://www.denizkiritoglu.com", "https://api.denizkiritoglu.com")
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // İzin verilen HTTP yöntemleri belirlenir
                 .allowedHeaders("*")
                 ;
